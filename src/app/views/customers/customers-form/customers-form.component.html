@@ -1,0 +1,33 @@
+<h1 class="text-xl mb-5">{{ pageTitle }}</h1>
+
+<form class="formgrid grid pb-8" [formGroup]="formGroup">
+  <div class="grid col-12">
+    <div class="col-12 xl:col-3 flex flex-column gap-2">
+      <label>Nome*</label>
+      <input pInputText formControlName="name" />
+      <small class="text-danger" *ngIf="nameControl.errors?.['maxlength'] as error">
+        Máximo {{ error.requiredLength }} caracteres
+      </small>
+    </div>
+
+    <div class="col-12 mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2">
+      <label>Telefone*</label>
+      <p-inputMask formControlName="phone" styleClass="w-full" mask="(99) 99999-9999" />
+    </div>
+
+    <div class="col-12 mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2">
+      <label>Email</label>
+      <input pInputText formControlName="email" />
+      <small class="text-danger" *ngIf="emailControl.touched && emailControl.errors?.['email']">
+        Email inválido
+      </small>
+    </div>
+  </div>
+</form>
+
+<footer class="footer">
+  <p-confirmPopup></p-confirmPopup>
+  <p-button styleClass="p-button-sm" (onClick)="onSave()">Salvar</p-button>
+  <p-button styleClass="p-button-raised p-button-text p-button-sm" routerLink="/customers">Voltar</p-button>
+  <p-button styleClass="p-button-danger p-button-raised p-button-text p-button-sm" *ngIf="editMode" (onClick)="onRemove($event)">Remover</p-button>
+</footer>

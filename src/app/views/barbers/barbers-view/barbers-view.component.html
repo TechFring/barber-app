@@ -1,0 +1,74 @@
+<h1 class="text-xl mb-5">Lista de barbeiros</h1>
+
+<app-filter (onFilter)="getBarbers()" (onClear)="getBarbers(true)">
+  <form [formGroup]="filterForm" class="formgrid grid pb-4">
+    <div class="col flex flex-column gap-2">
+      <label>Nome</label>
+      <input pInputText formControlName="name" />
+    </div>
+
+    <div class="col flex flex-column gap-2">
+      <label>Descrição</label>
+      <input pInputText formControlName="description" />
+    </div>
+
+    <div class="col flex flex-column gap-2">
+      <label>Destaque</label>
+      <p-dropdown optionLabel="label" styleClass="w-full" formControlName="highlight" [options]="highlightOptions"></p-dropdown>
+    </div>
+  </form>
+</app-filter>
+
+<div class="mt-5 pb-8">
+  <p-table
+    dataKey="id"
+    [value]="barbers"
+    [totalRecords]="totalRecords"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="limitPaging"
+    [rowsPerPageOptions]="[5, 10, 25]"
+    [(selection)]="selectedBarbers"
+    (onPage)="onLazyLoad($event)"
+  >
+    <ng-template pTemplate="header">
+        <tr>
+          <th class="w-4rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+          <th class="w-12rem">Nome</th>
+          <th>Descrição</th>
+          <th class="w-10rem text-center"></th>
+          <th class="w-8rem"></th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-barber>
+      <tr *ngIf="loading">
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+      </tr>
+
+      <tr *ngIf="!loading">
+        <td><p-tableCheckbox [value]="barber"></p-tableCheckbox></td>
+        <td>{{ barber.name }}</td>
+        <td class="ellipsis">{{ barber.description }}</td>
+        <td class="text-center">
+          <p-tag *ngIf="barber.highlight" severity="success">Destaque</p-tag>
+          <p-tag *ngIf="!barber.highlight" severity="danger">Não destaque</p-tag>
+        </td>
+        <td><p-button styleClass="p-button-raised p-button-text p-button-sm" [routerLink]="barber.id">Acessar</p-button></td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="paginatorleft">
+      <p-confirmPopup></p-confirmPopup>
+      <p-splitButton label="Ações" [model]="actions" styleClass="p-button-raised p-button-text"></p-splitButton>
+    </ng-template>
+  </p-table>
+</div>
+
+<footer class="footer">
+  <p-button styleClass="p-button-sm" routerLink="new">Novo barbeiro</p-button>
+</footer>

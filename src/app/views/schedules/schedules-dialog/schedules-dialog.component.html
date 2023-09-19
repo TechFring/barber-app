@@ -1,0 +1,42 @@
+<p-dialog
+  [header]="dialogHeader"
+  [modal]="true"
+  [style]="{ maxWidth: '600px', width: '100%' }"
+  [draggable]="false"
+  [resizable]="false"
+  [(visible)]="visible"
+  (onHide)="onClose()"
+>
+  <form class="formgrid grid mb-4" [formGroup]="formGroup">
+    <div class="col-12 flex flex-column gap-2">
+      <label>Título*</label>
+      <input pInputText formControlName="title" />
+    </div>
+
+    <div class="col-12 flex flex-column gap-2 mt-3">
+      <label>Barbeiro*</label>
+      <p-dropdown appendTo="body" optionLabel="name" styleClass="w-full" formControlName="barber" [options]="barbers" [autoDisplayFirst]="false"></p-dropdown>
+    </div>
+
+    <div class="col-12 flex flex-column gap-2 mt-3">
+      <label>Cliente*</label>
+      <p-dropdown appendTo="body" optionLabel="name" styleClass="w-full" formControlName="customer" [options]="customers" [autoDisplayFirst]="false"></p-dropdown>
+    </div>
+
+    <div class="col-12 flex flex-column gap-2 mt-3">
+      <label>Serviços*</label>
+      <p-multiSelect appendTo="body" display="chip" styleClass="w-full" formControlName="services" optionLabel="name" [options]="services"></p-multiSelect>
+    </div>
+
+    <div class="col-12 flex flex-column gap-2 mt-3">
+      <label>Horário*</label>
+      <p-calendar appendTo="body" dateFormat="dd/mm/yy" styleClass="w-full" formControlName="date" [showTime]="true" [readonlyInput]="true" [minDate]="minDate" [maxDate]="maxDate"></p-calendar>
+    </div>
+  </form>
+
+  <div class="flex gap-3">
+    <p-button styleClass="p-button-sm">Salvar</p-button>
+    <p-button styleClass="p-button-raised p-button-text p-button-sm" (onClick)="onClose()">Cancelar</p-button>
+    <p-button styleClass="p-button-raised p-button-text p-button-danger p-button-sm" (onClick)="onClose()">Remover</p-button>
+  </div>
+</p-dialog>

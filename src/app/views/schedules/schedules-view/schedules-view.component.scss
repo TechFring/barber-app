@@ -1,0 +1,16 @@
+@import '/src/styles/variables.scss';
+
+$schedule-header-height: 35px;
+$footer-height: 73px;
+
+.fc { /* the calendar root */
+  max-height: calc(100vh - $menu-height - $schedule-header-height - $footer-height);
+}
+
+full-calendar ::ng-deep {
+  .fc-event-future.fc-list-event,
+  .fc-timegrid-event-harness,
+  .fc-event.fc-daygrid-block-event {
+    cursor: pointer;
+  }
+}

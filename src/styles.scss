@@ -1,0 +1,54 @@
+@import 'primeng/resources/themes/soho-dark/theme.css';
+@import 'primeng/resources/primeng.css';
+@import 'primeicons/primeicons.css';
+@import 'primeflex/primeflex.css';
+
+@import './styles/reset.scss';
+@import './styles/variables.scss';
+
+:root {
+  --fc-list-event-hover-bg-color: #555770;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 16px;
+  background: $dark-0;
+  overflow-y: scroll;
+}
+
+a {
+  text-decoration: none;
+  color: currentColor;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.container {
+  padding: 16px 16px;
+}
+
+.footer {
+  width: 100%;
+  background: $dark-1;
+  position: fixed;
+  inset: auto 0 0 $sidebar-collapsed-width;
+  padding: 16px;
+  transition: all ease-in 0.1s;
+  z-index: 1000;
+  border-top: 1px solid $dark-0;
+
+  p-button + p-button {
+    margin-left: 16px;
+  }
+}
+
+.text-danger {
+  color: $error;
+}

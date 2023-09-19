@@ -1,0 +1,99 @@
+@import '/src/styles/variables.scss';
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: $sidebar-collapsed-width;
+  background: $dark-1;
+  color: $light-4;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  transition: all ease-in 0.1s;
+
+  &-logo {
+    width: 100%;
+    max-width: 110px;
+    margin: 0 auto 16px;
+  }
+
+  &-search {
+    width: 100%;
+  }
+
+  &-button ::ng-deep button {
+    width: 100%;
+  }
+
+  &-list,
+  &-settings {
+    margin: 12px 0 0;
+    user-select: none;
+
+    &-item {
+      cursor: pointer;
+      border-radius: 8px;
+
+      &:hover,
+      &.active {
+        background-color: $dark-0;
+      }
+    }
+  }
+
+  &-list {
+    overflow-y: hidden;
+
+    &:hover {
+      // margin-right: -8px;
+      overflow-y: auto;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px transparent;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $dark-2;
+      border-radius: 10px;
+
+      &:hover {
+        background: $dark-4;
+      }
+    }
+  }
+
+  &-divider {
+    width: 100%;
+    border: none;
+    border: 1px solid $dark-0;
+    margin-top: auto;
+  }
+
+  &-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px;
+    width: 100%;
+    height: 100%;
+  }
+
+  &-icon {
+    font-size: 22px;
+  }
+
+  &--expanded {
+    width: $sidebar-expanded-width;
+    padding: 32px 16px 16px;
+  }
+
+  &--expanded &-logo {
+    margin: 0 auto 32px;
+  }
+}

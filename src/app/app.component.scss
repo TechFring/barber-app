@@ -1,0 +1,17 @@
+@import '/src/styles/variables.scss';
+@import '/src/styles/custom-primeng.scss';
+
+.content {
+  padding-top: $menu-height;
+  margin-left: $sidebar-collapsed-width;
+  transition: margin-left ease-in 0.1s;
+
+  &--collapsed {
+    margin-left: $sidebar-expanded-width;
+
+    ::ng-deep .footer {
+      left: $sidebar-expanded-width;
+    }
+  }
+}
+

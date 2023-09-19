@@ -1,0 +1,50 @@
+<aside class="sidebar" [class.sidebar--expanded]="expanded">
+  <img class="sidebar-logo" src="assets/images/logo.png" />
+
+  <span class="p-input-icon-left" *ngIf="expanded">
+    <i class="pi pi-search"></i>
+    <input
+      class="sidebar-search"
+      placeholder="Buscar..."
+      pInputText
+      #elInputSearch
+      [formControl]="searchControl"
+      (focus)="toggleSidebar()"
+    />
+  </span>
+
+  <p-button
+    class="sidebar-button"
+    icon="pi pi-search"
+    styleClass="p-button-text p-button-raised"
+    *ngIf="!expanded"
+    (onClick)="toggleSidebar()"
+  ></p-button>
+
+  <ul class="sidebar-list">
+    <li class="sidebar-list-item" *ngFor="let item of items$ | async" [class.active]="currentRoute === item.url">
+      <a class="sidebar-link" [routerLink]="item.url">
+        <i class="sidebar-icon" [class]="item.icon"></i>
+        <span *ngIf="expanded">{{ item.label }}</span>
+      </a>
+    </li>
+  </ul>
+
+  <hr class="sidebar-divider" />
+
+  <ul class="sidebar-settings">
+    <li class="sidebar-settings-item">
+      <a class="sidebar-link" routerLink="/configuracoes">
+        <i class="sidebar-icon pi pi-cog"></i>
+        <span *ngIf="expanded">Configurações</span>
+      </a>
+    </li>
+
+    <li class="sidebar-settings-item">
+      <a class="sidebar-link" routerLink="/configuracoes">
+        <i class="sidebar-icon pi pi-sign-out"></i>
+        <span *ngIf="expanded">Sair</span>
+      </a>
+    </li>
+  </ul>
+</aside>

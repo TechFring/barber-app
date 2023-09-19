@@ -1,0 +1,67 @@
+<h1 class="text-xl mb-5">{{ pageTitle }}</h1>
+
+<form class="formgrid grid pb-8" [formGroup]="formGroup">
+  <div class="grid col-12">
+    <div class="col-12 xl:col-3 flex flex-column gap-2">
+      <label>Nome*</label>
+      <input pInputText formControlName="name" />
+      <small class="text-danger" *ngIf="nameControl.errors?.['maxlength'] as error">
+        Máximo {{ error.requiredLength }} caracteres
+      </small>
+    </div>
+
+    <div class="col-12 mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2">
+      <label>Data de nascimento*</label>
+      <p-calendar dateFormat="dd/mm/yy" styleClass="w-full" formControlName="dateBirth" [readonlyInput]="true"></p-calendar>
+    </div>
+  </div>
+
+  <div class="grid col-12 mt-3">
+    <div class="col-12 xl:col-6 flex flex-column gap-2">
+      <label>Foto</label>
+
+      <p-fileUpload
+        accept="image/*"
+        chooseLabel="Selecionar"
+        invalidFileSizeMessageSummary="{0}: Tamanho de arquivo inválido, "
+        invalidFileSizeMessageDetail="o tamanho máximo de upload é {0}"
+        [maxFileSize]="1000000"
+        [showUploadButton]="false"
+        [showCancelButton]="false"
+        (onSelect)="onSelectPhoto($event)"
+        (onRemove)="onRemovePhoto()"
+      ></p-fileUpload>
+    </div>
+  </div>
+
+  <div class="grid col-12 mt-3">
+    <div class="col-12 xl:col-6 flex flex-column gap-2">
+      <label>Descrição</label>
+      <textarea
+        class="w-full"
+        rows="5"
+        cols="30"
+        pInputTextarea
+        formControlName="description"
+        [autoResize]="true"
+      ></textarea>
+      <small class="text-danger" *ngIf="descriptionControl.errors?.['maxlength'] as error">
+        Máximo {{ error.requiredLength }} caracteres
+      </small>
+    </div>
+  </div>
+
+  <div class="grid col-12 mt-3">
+    <div class="col-12 xl:col-3 xl:mt-0 flex align-items-center gap-2">
+      <p-inputSwitch formControlName="highlight"></p-inputSwitch>
+      <label>Destaque</label>
+    </div>
+  </div>
+</form>
+
+<footer class="footer">
+  <p-confirmPopup></p-confirmPopup>
+  <p-button styleClass="p-button-sm" (onClick)="onSave()">Salvar</p-button>
+  <p-button styleClass="p-button-raised p-button-text p-button-sm" routerLink="/barbers">Voltar</p-button>
+  <p-button styleClass="p-button-danger p-button-raised p-button-text p-button-sm" *ngIf="editMode" (onClick)="onRemove($event)">Remover</p-button>
+</footer>
