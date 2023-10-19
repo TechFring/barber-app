@@ -27,19 +27,11 @@ export abstract class PrimeNGConst {
     clear: 'Limpar'
   };
 
-  public static buildActions(
-    removeCommand: (event: MenuItemCommandEvent) => void,
-    removeHighlightCommand?: (event: MenuItemCommandEvent) => void,
-    highlightCommand?: (event: MenuItemCommandEvent) => void,
-  ): MenuItem[] {
-    const actions: MenuItem[] = [{ label: 'Remover', command: removeCommand }];
-
-    if (removeHighlightCommand)
-      actions.unshift({ label: 'Remover destaque', command: removeHighlightCommand })
-
-    if (highlightCommand)
-      actions.unshift({ label: 'Destacar', command: highlightCommand })
-
+  public static buildActions(activeCommand: (event: MenuItemCommandEvent) => void, inactiveCommand: (event: MenuItemCommandEvent) => void): MenuItem[] {
+    const actions: MenuItem[] = [
+      { label: 'Ativar', command: activeCommand },
+      { label: 'Inativar', command: inactiveCommand },
+    ];
     return actions;
   }
 }

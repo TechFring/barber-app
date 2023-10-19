@@ -46,7 +46,7 @@ export class SidebarComponent {
   private _initCurrentRoute(): void {
     this._router.events.pipe(
         takeUntilDestroyed(),
-        filter((event) => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd && !!(event.url.match(this.ROUTE_MATCHER)?.length)),
       )
       .subscribe((event: any) => this.currentRoute = `/${event.url.match(this.ROUTE_MATCHER)[1]}`);
   }

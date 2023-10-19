@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, map, timer, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { ApiConst } from '@core/constants';
-import { ICustomer, ICustomerParams, IPaginator } from '@core/models';
+import { ICustomer, ICustomerFilters, IPaginator } from '@core/models';
 
 @Injectable({
   providedIn: 'root'
@@ -11,28 +11,13 @@ import { ICustomer, ICustomerParams, IPaginator } from '@core/models';
 export class CustomersService {
   constructor(private _http: HttpClient) { }
 
-  public get(customerParams?: ICustomerParams): Observable<IPaginator<ICustomer>> {
-    const object = JSON.parse(JSON.stringify(customerParams));
-    const params = new HttpParams({ fromObject: object });
-
-    return timer(1000).pipe(
-      switchMap(() => this._http.get<ICustomer[]>(ApiConst.ENDPOINT_CUSTOMERS, { params, observe: 'response' })
-        .pipe(
-          map((res) => {
-            const items = res.body as ICustomer[];
-            const total = +(res.headers.get(ApiConst.HEADER_TOTAL_COUNT) as string);
-            return { items, total };
-          })
-        )));
+  public get(filters: ICustomerFilters): Observable<IPaginator<ICustomer>> {
+    const params = new HttpParams({ fromObject: Object.assign(filters) });
+    return this._http.get<IPaginator<ICustomer>>(ApiConst.ENDPOINT_CUSTOMERS, { params });
   }
 
-  public getById(customerId: string): Observable<ICustomer> {
-    return this._http.get<ICustomer>(`${ApiConst.ENDPOINT_CUSTOMERS}/${customerId}`);
-  }
-
-  public delete(customerIds: number[]): Observable<any> {
-    const requests$ = customerIds.map((customerId) => this._http.delete<any>(`${ApiConst.ENDPOINT_CUSTOMERS}/${customerId}`));
-    return forkJoin(requests$);
+  public getById(id: string): Observable<ICustomer> {
+    return this._http.get<ICustomer>(`${ApiConst.ENDPOINT_CUSTOMERS}/${id}`);
   }
 
   public post(customer: ICustomer): Observable<ICustomer> {
@@ -40,6 +25,16 @@ export class CustomersService {
   }
 
   public put(customer: ICustomer): Observable<ICustomer> {
-    return this._http.put<ICustomer>(`${ApiConst.ENDPOINT_CUSTOMERS}/${customer.id}`, customer);
+    const id = customer.id;
+    delete customer.id;
+    return this._http.put<ICustomer>(`${ApiConst.ENDPOINT_CUSTOMERS}/${id}`, customer);
+  }
+
+  public delete(id: string): Observable<void> {
+    return this._http.delete<void>(`${ApiConst.ENDPOINT_CUSTOMERS}/${id}`);
+  }
+
+  public deleteMany(ids: string[]): Observable<void> {
+    return this._http.delete<void>(ApiConst.ENDPOINT_CUSTOMERS, { body: { ids } });
   }
 }

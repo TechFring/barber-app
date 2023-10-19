@@ -1,15 +1,15 @@
 export interface IBarber {
-  id?: number | string;
+  id?: string;
   name: string;
-  dateBirth: string;
-  description: string;
-  highlight: boolean
+  email: string;
+  document: string;
+  date_birth: string | Date;
+  active?: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
-export interface IBarberParams {
-  name_like?: string;
-  description_like?: string;
-  highlight?: boolean;
-  _page: number;
-  _limit: number;
+export interface IBarberFilters extends Pick<IBarber, 'name' | 'email' | 'document' | 'active'> {
+  page: number;
+  per_page: number;
 }

@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { CustomersService } from '@core/services';
 import { ICustomer } from '@core/models';
 import { PrimeNGConst } from '@core/constants';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-customers-form',
@@ -18,7 +19,7 @@ export class CustomersFormComponent {
   public formGroup = this._fb.group({
     name: this._fb.control('', [Validators.required, Validators.maxLength(100)]),
     phone: this._fb.control('', [Validators.required]),
-    email: this._fb.control('', [Validators.email]),
+    email: this._fb.control('', [Validators.required, Validators.email]),
   });
   public editMode!: boolean;
 
@@ -26,6 +27,7 @@ export class CustomersFormComponent {
     private _fb: NonNullableFormBuilder,
     private _router: Router,
     private _confirmationService: ConfirmationService,
+    private _messageService: MessageService,
     private _customersService: CustomersService,
   ) {}
 
@@ -63,7 +65,10 @@ export class CustomersFormComponent {
       ? this._customersService.put(customer)
       : this._customersService.post(customer);
 
-    request$.subscribe(() => this._router.navigateByUrl('/customers'));
+    request$.subscribe({
+      next: () => this._router.navigateByUrl('/customers'),
+      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
+    });
   }
 
   public onRemove(event: Event): void {
@@ -81,7 +86,6 @@ export class CustomersFormComponent {
   }
 
   private _deleteBarber(): void {
-    const customersIds = [+(<string>this.customerId)];
-    this._customersService.delete(customersIds).subscribe(() => this._router.navigateByUrl('/customers'));
+    this._customersService.delete(this.customerId as string).subscribe(() => this._router.navigateByUrl('/customers'));
   }
 }

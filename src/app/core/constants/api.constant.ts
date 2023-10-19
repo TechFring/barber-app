@@ -5,6 +5,7 @@ export abstract class ApiConst {
   public static readonly DEFAULT_PAGE = 1;
   public static readonly DEFAULT_LIMIT = 5;
 
-  public static readonly ENDPOINT_BARBERS = `${environment.apiUrl}/barbers`;
-  public static readonly ENDPOINT_CUSTOMERS = `${environment.apiUrl}/customers`;
+  public static readonly ENDPOINT_BARBERS = `${environment.apiUrl}/barber`;
+  public static readonly ENDPOINT_CUSTOMERS = `${environment.apiUrl}/customer`;
+  public static readonly ENDPOINT_LABORS = `${environment.apiUrl}/labor`;
 }

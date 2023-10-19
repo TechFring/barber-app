@@ -6,7 +6,7 @@ import { BarbersViewComponent, BarbersFormComponent } from '@views/barbers';
 const routes: Routes = [
   { path: '', component: BarbersViewComponent },
   { path: 'new', component: BarbersFormComponent },
-  { path: ':barberId', component: BarbersFormComponent },
+  { path: ':id', component: BarbersFormComponent },
 ];
 
 @NgModule({

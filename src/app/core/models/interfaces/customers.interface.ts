@@ -3,12 +3,12 @@ export interface ICustomer {
   name: string;
   phone: string;
   email: string;
+  active?: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
-export interface ICustomerParams {
-  name_like?: string;
-  phone_like?: string;
-  email_like?: string;
-  _page: number;
-  _limit: number;
+export interface ICustomerFilters extends Pick<ICustomer, 'name' | 'phone' | 'email' | 'active'> {
+  page: number;
+  per_page: number;
 }

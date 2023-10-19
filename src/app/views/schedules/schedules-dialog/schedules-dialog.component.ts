@@ -3,7 +3,7 @@ import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { EventImpl } from '@fullcalendar/core/internal';
 
 import { BarbersService, CustomersService } from '@core/services';
-import { IBarber, IBarberParams, ICustomer, ICustomerParams } from '@core/models';
+import { IBarber, ICustomer } from '@core/models';
 
 @Component({
   selector: 'app-schedules-dialog',
@@ -39,26 +39,26 @@ export class SchedulesDialogComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    const params: ICustomerParams | IBarberParams = {
-      _limit: 9999,
-      _page: 1
-    };
-    this._customersService.get(params).subscribe((res) => this.customers = res.items);
-    this._barbersService.get(params).subscribe((res) => this.barbers = res.items);
-    this.services = [
-      { id: 1, time: '00:30', name: 'Corte de cabelo', valor: 35.00 },
-      { id: 2, time: '00:30', name: 'Barba', valor: 25.00 },
-    ];
+    // const params: ICustomerParams | IBarberParams = {
+    //   _limit: 9999,
+    //   _page: 1
+    // };
+    // this._customersService.get(params).subscribe((res) => this.customers = res.items);
+    // // this._barbersService.get(params).subscribe((res) => this.barbers = res.items);
+    // this.services = [
+    //   { id: 1, time: '00:30', name: 'Corte de cabelo', valor: 35.00 },
+    //   { id: 2, time: '00:30', name: 'Barba', valor: 25.00 },
+    // ];
 
-    this.formGroup.valueChanges.subscribe((value) => {
-      const services = value.services?.map((service: any) => service.name).join(' + ');
-      const barber = value.barber?.name.concat(': ') || '';
-      this.formGroup.controls.title.setValue(barber + services, { emitEvent: false });
-    });
+    // this.formGroup.valueChanges.subscribe((value) => {
+    //   const services = value.services?.map((service: any) => service.name).join(' + ');
+    //   const barber = value.barber?.name.concat(': ') || '';
+    //   this.formGroup.controls.title.setValue(barber + services, { emitEvent: false });
+    // });
 
-    this.minDate = new Date();
-    this.maxDate = new Date();
-    this.maxDate.setDate(this.minDate.getDate() + 4 * 7);
+    // this.minDate = new Date();
+    // this.maxDate = new Date();
+    // this.maxDate.setDate(this.minDate.getDate() + 4 * 7);
   }
 
   public open(schedule?: EventImpl): void {

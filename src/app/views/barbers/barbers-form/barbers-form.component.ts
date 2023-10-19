@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
-import { IBarber, IUploadEvent } from '@core/models';
+import { IBarber } from '@core/models';
 import { BarbersService } from '@core/services';
-import { PrimeNGConst } from '@core/constants';
 
 @Component({
   selector: 'app-barbers-form',
@@ -13,21 +13,21 @@ import { PrimeNGConst } from '@core/constants';
   styleUrls: ['./barbers-form.component.scss']
 })
 export class BarbersFormComponent implements OnInit {
-  @Input() public barberId?: string;
+  @Input() public id?: string;
 
   public formGroup = this._fb.group({
     name: this._fb.control('', [Validators.required, Validators.maxLength(100)]),
-    dateBirth: this._fb.control<any>('', [Validators.required]),
-    description: this._fb.control('', [Validators.maxLength(255)]),
-    highlight: this._fb.control(false),
+    email: this._fb.control('', [Validators.required, Validators.email]),
+    document: this._fb.control('', [Validators.required]),
+    date_birth: this._fb.control<Date | string>('', [Validators.required]),
   });
-  public uploadedPhoto!: File | undefined;
   public editMode!: boolean;
+  public isActive!: boolean;
 
   constructor(
     private _fb: NonNullableFormBuilder,
     private _router: Router,
-    private _confirmationService: ConfirmationService,
+    private _messageService: MessageService,
     private _barbersService: BarbersService,
   ) {}
 
@@ -39,24 +39,15 @@ export class BarbersFormComponent implements OnInit {
     return this.formGroup.controls.name;
   }
 
-  get descriptionControl(): FormControl {
-    return this.formGroup.controls.description;
+  get emailControl(): FormControl {
+    return this.formGroup.controls.email;
   }
 
   public ngOnInit(): void {
-    this.editMode = !!this.barberId;
+    this.editMode = !!this.id;
 
     if (this.editMode)
-      this._searchBarberAndUpdateForm();
-  }
-
-  public onSelectPhoto(event: IUploadEvent): void {
-    if (event.currentFiles.length)
-      this.uploadedPhoto = event.currentFiles[0] as File;
-  }
-
-  public onRemovePhoto(): void {
-    this.uploadedPhoto = undefined;
+      this._loadData();
   }
 
   public onSave(): void {
@@ -66,33 +57,43 @@ export class BarbersFormComponent implements OnInit {
       return;
 
     const barber: IBarber = {
-      id: this.barberId,
+      id: this.id,
       ...this.formGroup.getRawValue()
     };
 
     const request$ = this.editMode
-      ? this._barbersService.put(barber)
-      : this._barbersService.post(barber);
+      ? this._barbersService.update(barber)
+      : this._barbersService.create(barber);
 
-    request$.subscribe(() => this._router.navigateByUrl('/barbers'));
-  }
-
-  public onRemove(event: Event): void {
-    this._confirmationService.confirm({
-      ...PrimeNGConst.CONFIRMATION,
-      target: event.target as EventTarget,
-      accept: () => this._deleteBarber()
+    request$.subscribe({
+      next: () => this._router.navigateByUrl('/barbers'),
+      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
     });
   }
 
-  private _searchBarberAndUpdateForm(): void {
-    this._barbersService.getById(this.barberId as string).subscribe((res) => {
-      this.formGroup.patchValue({ ...res, dateBirth: new Date(res.dateBirth) });
+  public onActive(): void {
+    this._barbersService.active(this.id as string).subscribe({
+      next: () => this.isActive = true,
+      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
     });
   }
 
-  private _deleteBarber(): void {
-    const barbersIds = [+(<string>this.barberId)];
-    this._barbersService.delete(barbersIds).subscribe(() => this._router.navigateByUrl('/barbers'));
+  public onInactive(): void {
+    this._barbersService.inactive(this.id as string).subscribe({
+      next: () => this.isActive = false,
+      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
+    });
+  }
+
+  private _loadData(): void {
+    this._barbersService.search(this.id as string).subscribe({
+      next: (res) => {
+        const date = new Date(res.date_birth);
+        this.isActive = res.active as boolean;
+        date.setDate(date.getDate() + 1);
+        this.formGroup.patchValue({ ...res, date_birth: date });
+      },
+      error: () => this._router.navigateByUrl('/barbers')
+    });
   }
 }

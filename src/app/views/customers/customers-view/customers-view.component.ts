@@ -5,7 +5,7 @@ import { SplitButton } from 'primeng/splitbutton';
 import { TablePageEvent } from 'primeng/table';
 
 import { ApiConst, PrimeNGConst } from '@core/constants';
-import { ICustomer, ICustomerParams } from '@core/models';
+import { ICustomer, ICustomerFilters } from '@core/models';
 import { CustomersService } from '@core/services';
 
 @Component({
@@ -21,7 +21,7 @@ export class CustomersViewComponent implements OnInit {
     phone: this._fb.control(''),
     email: this._fb.control('', [Validators.email]),
   });
-  public actions = PrimeNGConst.buildActions(() => this._actionRemove());
+  public actions = PrimeNGConst.buildActions(() => this._activeMany(), () => this._actionRemove());
   public currentPage = ApiConst.DEFAULT_PAGE;
   public limitPaging = ApiConst.DEFAULT_LIMIT;
   public loading = true;
@@ -39,19 +39,13 @@ export class CustomersViewComponent implements OnInit {
     return this.filterForm.controls.email;
   }
 
-  get idsOfSelectedCustomers(): number[] {
-    return this.selectedCustomers.map((customer) => customer.id as number);
+  get idsOfSelectedCustomers(): string[] {
+    return this.selectedCustomers.map((customer) => customer.id as string);
   }
 
-  get filterParams(): ICustomerParams {
+  get filterParams(): ICustomerFilters {
     const filters = this.filterForm.getRawValue();
-    return {
-      name_like: filters.name,
-      email_like: filters.email,
-      phone_like: filters.phone,
-      _page: this.currentPage,
-      _limit: this.limitPaging,
-    };
+    return { ...filters, page: this.currentPage, per_page: this.limitPaging };
   }
 
   public ngOnInit(): void {
@@ -73,11 +67,13 @@ export class CustomersViewComponent implements OnInit {
 
     this._customersService.get(this.filterParams).subscribe({
       next: (res) => {
-        this.customers = res.items;
+        this.customers = res.data;
         this.totalRecords = res.total;
       }
     }).add(() => this.loading = false);
   }
+
+  private _activeMany(): void {}
 
   private _actionRemove(): void {
     if (!this.selectedCustomers.length)
@@ -91,7 +87,7 @@ export class CustomersViewComponent implements OnInit {
   }
 
   private _deleteCustomers(): void {
-    this._customersService.delete(this.idsOfSelectedCustomers).subscribe(() => {
+    this._customersService.deleteMany(this.idsOfSelectedCustomers).subscribe(() => {
       this.selectedCustomers = [];
       this.getCustomers();
     });

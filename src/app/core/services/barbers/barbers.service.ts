@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, map, timer, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { ApiConst } from '@core/constants';
-import { IBarber, IBarberParams, IPaginator } from '@core/models';
+import { IBarber, IBarberFilters, IPaginator } from '@core/models';
 
 @Injectable({
   providedIn: 'root'
@@ -11,40 +11,38 @@ import { IBarber, IBarberParams, IPaginator } from '@core/models';
 export class BarbersService {
   constructor(private _http: HttpClient) { }
 
-  public get(barberParams: IBarberParams): Observable<IPaginator<IBarber>> {
-    const object = JSON.parse(JSON.stringify(barberParams));
-    const params = new HttpParams({ fromObject: object });
-    return timer(1000).pipe(
-      switchMap(() => this._http.get<IBarber[]>(ApiConst.ENDPOINT_BARBERS, { params, observe: 'response' })
-        .pipe(
-          map((res) => {
-            const items = res.body as IBarber[];
-            const total = +(res.headers.get(ApiConst.HEADER_TOTAL_COUNT) as string);
-            return { items, total };
-          })
-        )));
+  public list(filters: IBarberFilters): Observable<IPaginator<IBarber>> {
+    const params = new HttpParams({ fromObject: Object.assign(filters) });
+    return this._http.get<IPaginator<IBarber>>(ApiConst.ENDPOINT_BARBERS, { params });
   }
 
-  public getById(barberId: string): Observable<IBarber> {
-    return this._http.get<IBarber>(`${ApiConst.ENDPOINT_BARBERS}/${barberId}`);
+  public search(id: string): Observable<IBarber> {
+    return this._http.get<IBarber>(`${ApiConst.ENDPOINT_BARBERS}/${id}`);
   }
 
-  public post(barber: IBarber): Observable<IBarber> {
+  public create(barber: IBarber): Observable<IBarber> {
     return this._http.post<IBarber>(ApiConst.ENDPOINT_BARBERS, barber);
   }
 
-  public delete(barberIds: number[]): Observable<any> {
-    const requests$ = barberIds.map((barberId) => this._http.delete<any>(`${ApiConst.ENDPOINT_BARBERS}/${barberId}`));
-    return forkJoin(requests$);
+  public update(barber: IBarber): Observable<IBarber> {
+    const id = barber.id;
+    delete barber.id;
+    return this._http.put<IBarber>(`${ApiConst.ENDPOINT_BARBERS}/${id}`, barber);
   }
 
-  public put(barber: IBarber): Observable<IBarber> {
-    return this._http.put<IBarber>(`${ApiConst.ENDPOINT_BARBERS}/${barber.id}`, barber);
+  public active(id: string): Observable<void> {
+    return this._http.patch<void>(`${ApiConst.ENDPOINT_BARBERS}/active/${id}`, {});
   }
 
-  public patch(barberIds: number[], highlight: boolean): Observable<any> {
-    const body: Partial<IBarber> = { highlight };
-    const requests$ = barberIds.map((barberId) => this._http.patch<any>(`${ApiConst.ENDPOINT_BARBERS}/${barberId}`, body));
-    return forkJoin(requests$);
+  public activeMany(ids: string[]): Observable<void> {
+    return this._http.patch<void>(`${ApiConst.ENDPOINT_BARBERS}/active`, { ids });
+  }
+
+  public inactive(id: string): Observable<void> {
+    return this._http.patch<void>(`${ApiConst.ENDPOINT_BARBERS}/inactive/${id}`, {});
+  }
+
+  public inactiveMany(ids: string[]): Observable<void> {
+    return this._http.patch<void>(`${ApiConst.ENDPOINT_BARBERS}/inactive`, { ids });
   }
 }

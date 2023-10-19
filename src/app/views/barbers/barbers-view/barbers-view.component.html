@@ -1,6 +1,6 @@
 <h1 class="text-xl mb-5">Lista de barbeiros</h1>
 
-<app-filter (onFilter)="getBarbers()" (onClear)="getBarbers(true)">
+<app-filter (onFilter)="list()" (onClear)="list(true)">
   <form [formGroup]="filterForm" class="formgrid grid pb-4">
     <div class="col flex flex-column gap-2">
       <label>Nome</label>
@@ -8,13 +8,13 @@
     </div>
 
     <div class="col flex flex-column gap-2">
-      <label>Descrição</label>
-      <input pInputText formControlName="description" />
+      <label>Documento</label>
+      <p-inputMask formControlName="document" styleClass="w-full" mask="999.999.999-99" [autoClear]="false" [unmask]="true" />
     </div>
 
     <div class="col flex flex-column gap-2">
-      <label>Destaque</label>
-      <p-dropdown optionLabel="label" styleClass="w-full" formControlName="highlight" [options]="highlightOptions"></p-dropdown>
+      <label>Email</label>
+      <input pInputText formControlName="email" />
     </div>
   </form>
 </app-filter>
@@ -22,21 +22,22 @@
 <div class="mt-5 pb-8">
   <p-table
     dataKey="id"
-    [value]="barbers"
+    [value]="data"
     [totalRecords]="totalRecords"
     [lazy]="true"
     [paginator]="true"
     [rows]="limitPaging"
     [rowsPerPageOptions]="[5, 10, 25]"
-    [(selection)]="selectedBarbers"
+    [(selection)]="checked"
     (onPage)="onLazyLoad($event)"
   >
     <ng-template pTemplate="header">
         <tr>
           <th class="w-4rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-          <th class="w-12rem">Nome</th>
-          <th>Descrição</th>
-          <th class="w-10rem text-center"></th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Documento</th>
+          <th>Status</th>
           <th class="w-8rem"></th>
         </tr>
     </ng-template>
@@ -48,22 +49,20 @@
         <td><p-skeleton></p-skeleton></td>
         <td><p-skeleton></p-skeleton></td>
         <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
       </tr>
 
       <tr *ngIf="!loading">
         <td><p-tableCheckbox [value]="barber"></p-tableCheckbox></td>
         <td>{{ barber.name }}</td>
-        <td class="ellipsis">{{ barber.description }}</td>
-        <td class="text-center">
-          <p-tag *ngIf="barber.highlight" severity="success">Destaque</p-tag>
-          <p-tag *ngIf="!barber.highlight" severity="danger">Não destaque</p-tag>
-        </td>
+        <td>{{ barber.email }}</td>
+        <td>{{ barber.document }}</td>
+        <td><ng-template [appRegisterStatus]="barber.active"></ng-template></td>
         <td><p-button styleClass="p-button-raised p-button-text p-button-sm" [routerLink]="barber.id">Acessar</p-button></td>
       </tr>
     </ng-template>
 
     <ng-template pTemplate="paginatorleft">
-      <p-confirmPopup></p-confirmPopup>
       <p-splitButton label="Ações" [model]="actions" styleClass="p-button-raised p-button-text"></p-splitButton>
     </ng-template>
   </p-table>
