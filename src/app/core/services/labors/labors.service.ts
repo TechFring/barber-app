@@ -30,11 +30,19 @@ export class LaborsService {
     return this._http.put<ILabor>(`${ApiConst.ENDPOINT_LABORS}/${id}`, labor);
   }
 
-  public delete(id: string): Observable<void> {
-    return this._http.delete<void>(`${ApiConst.ENDPOINT_LABORS}/${id}`);
+  public active(id: string): Observable<void> {
+    return this._http.patch<void>(`${ApiConst.ENDPOINT_LABORS}/active/${id}`, {});
   }
 
-  public deleteMany(ids: string[]): Observable<void> {
-    return this._http.delete<void>(ApiConst.ENDPOINT_LABORS, { body: { ids } });
+  public activeMany(ids: string[]): Observable<void> {
+    return this._http.patch<void>(`${ApiConst.ENDPOINT_LABORS}/active`, { ids });
+  }
+
+  public inactive(id: string): Observable<void> {
+    return this._http.patch<void>(`${ApiConst.ENDPOINT_LABORS}/inactive/${id}`, {});
+  }
+
+  public inactiveMany(ids: string[]): Observable<void> {
+    return this._http.patch<void>(`${ApiConst.ENDPOINT_LABORS}/inactive`, { ids });
   }
 }

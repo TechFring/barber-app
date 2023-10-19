@@ -1,6 +1,6 @@
 <h1 class="text-xl mb-5">Lista de serviços</h1>
 
-<app-filter (onFilter)="getLabors()" (onClear)="getLabors(true)">
+<app-filter (onFilter)="list()" (onClear)="list(true)">
   <form [formGroup]="filterForm" class="formgrid grid pb-4">
     <div class="col flex flex-column gap-2">
       <label>Nome</label>
@@ -17,13 +17,13 @@
 <div class="mt-5 pb-8">
   <p-table
     dataKey="id"
-    [value]="labors"
+    [value]="data"
     [totalRecords]="totalRecords"
     [lazy]="true"
     [paginator]="true"
     [rows]="limitPaging"
     [rowsPerPageOptions]="[5, 10, 25]"
-    [(selection)]="selectedLabors"
+    [(selection)]="checked"
     (onPage)="onLazyLoad($event)"
   >
     <ng-template pTemplate="header">
