@@ -3,11 +3,11 @@ import { Button } from 'primeng/button';
 import { Subscription } from 'rxjs';
 
 @Directive({
-  selector: '[appActiveInactiveButton]',
+  selector: '[appToggleStatusButton]',
   standalone: true,
 })
-export class ActiveInactiveButtonDirective implements OnChanges, OnDestroy {
-  @Input('appActiveInactiveButton') public isActive!: boolean;
+export class ToggleStatusButtonDirective implements OnChanges, OnDestroy {
+  @Input('appToggleStatusButton') public isActive!: boolean;
   @Output() public onInactive = new EventEmitter<MouseEvent>;
   @Output() public onActive = new EventEmitter<MouseEvent>;
 

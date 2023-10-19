@@ -13,7 +13,7 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 
 import { FilterComponent } from '@shared/components';
-import { ActiveInactiveButtonDirective, RegisterStatusDirective } from '@shared/directives';
+import { ToggleStatusButtonDirective, RegisterStatusDirective } from '@shared/directives';
 
 @NgModule({
   imports: [
@@ -29,7 +29,7 @@ import { ActiveInactiveButtonDirective, RegisterStatusDirective } from '@shared/
     TableModule,
     ToastModule,
     FilterComponent,
-    ActiveInactiveButtonDirective,
+    ToggleStatusButtonDirective,
     RegisterStatusDirective,
   ],
   exports: [
@@ -45,7 +45,7 @@ import { ActiveInactiveButtonDirective, RegisterStatusDirective } from '@shared/
     TableModule,
     ToastModule,
     FilterComponent,
-    ActiveInactiveButtonDirective,
+    ToggleStatusButtonDirective,
     RegisterStatusDirective,
   ],
   providers: [ConfirmationService, MessageService],

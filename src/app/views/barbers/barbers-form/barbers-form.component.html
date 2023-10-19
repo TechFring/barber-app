@@ -36,5 +36,5 @@
   <p-confirmPopup></p-confirmPopup>
   <p-button styleClass="p-button-sm" (onClick)="onSave()">Salvar</p-button>
   <p-button styleClass="p-button-raised p-button-text p-button-sm" routerLink="/barbers">Voltar</p-button>
-  <ng-template *ngIf="editMode" [appActiveInactiveButton]="isActive" (onActive)="onActive()" (onInactive)="onInactive()"></ng-template>
+  <ng-template *ngIf="editMode" [appToggleStatusButton]="isActive" (onActive)="onActive()" (onInactive)="onInactive()"></ng-template>
 </footer>
