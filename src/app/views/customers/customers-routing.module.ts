@@ -7,7 +7,7 @@ import { CustomersViewComponent, CustomersFormComponent } from '@views/customers
 const routes: Routes = [
   { path: '', component: CustomersViewComponent },
   { path: 'new', component: CustomersFormComponent },
-  { path: ':customerId', component: CustomersFormComponent },
+  { path: ':id', component: CustomersFormComponent },
 ];
 
 @NgModule({

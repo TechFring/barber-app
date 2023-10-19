@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 import { CustomersService } from '@core/services';
 import { ICustomer } from '@core/models';
-import { PrimeNGConst } from '@core/constants';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -14,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./customers-form.component.scss']
 })
 export class CustomersFormComponent {
-  @Input() public customerId?: string;
+  @Input() public id?: string;
 
   public formGroup = this._fb.group({
     name: this._fb.control('', [Validators.required, Validators.maxLength(100)]),
@@ -22,11 +21,11 @@ export class CustomersFormComponent {
     email: this._fb.control('', [Validators.required, Validators.email]),
   });
   public editMode!: boolean;
+  public isActive!: boolean;
 
   constructor(
     private _fb: NonNullableFormBuilder,
     private _router: Router,
-    private _confirmationService: ConfirmationService,
     private _messageService: MessageService,
     private _customersService: CustomersService,
   ) {}
@@ -44,10 +43,10 @@ export class CustomersFormComponent {
   }
 
   public ngOnInit(): void {
-    this.editMode = !!this.customerId;
+    this.editMode = !!this.id;
 
     if (this.editMode)
-      this._searchCustomerAndUpdateForm();
+      this._loadData();
   }
 
   public onSave(): void {
@@ -57,13 +56,13 @@ export class CustomersFormComponent {
       return;
 
     const customer: ICustomer = {
-      id: this.customerId,
+      id: this.id,
       ...this.formGroup.getRawValue()
     };
 
     const request$ = this.editMode
-      ? this._customersService.put(customer)
-      : this._customersService.post(customer);
+      ? this._customersService.update(customer)
+      : this._customersService.create(customer);
 
     request$.subscribe({
       next: () => this._router.navigateByUrl('/customers'),
@@ -71,21 +70,27 @@ export class CustomersFormComponent {
     });
   }
 
-  public onRemove(event: Event): void {
-    this._confirmationService.confirm({
-      ...PrimeNGConst.CONFIRMATION,
-      target: event.target as EventTarget,
-      accept: () => this._deleteBarber()
+  public onActive(): void {
+    this._customersService.active(this.id as string).subscribe({
+      next: () => this.isActive = true,
+      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
     });
   }
 
-  private _searchCustomerAndUpdateForm(): void {
-    this._customersService.getById(this.customerId as string).subscribe((res) => {
-      this.formGroup.patchValue(res);
+  public onInactive(): void {
+    this._customersService.inactive(this.id as string).subscribe({
+      next: () => this.isActive = false,
+      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
     });
   }
 
-  private _deleteBarber(): void {
-    this._customersService.delete(this.customerId as string).subscribe(() => this._router.navigateByUrl('/customers'));
+  private _loadData(): void {
+    this._customersService.search(this.id as string).subscribe({
+      next: (res) => {
+        this.isActive = res.active as boolean;
+        this.formGroup.patchValue(res);
+      },
+      error: () => this._router.navigateByUrl('/customers')
+    });
   }
 }

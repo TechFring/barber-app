@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
-import { SplitButton } from 'primeng/splitbutton';
 import { TablePageEvent } from 'primeng/table';
 
-import { ApiConst, PrimeNGConst } from '@core/constants';
+import { ApiConst } from '@core/constants';
 import { ICustomer, ICustomerFilters } from '@core/models';
 import { CustomersService } from '@core/services';
 
@@ -14,24 +12,20 @@ import { CustomersService } from '@core/services';
   styleUrls: ['./customers-view.component.scss']
 })
 export class CustomersViewComponent implements OnInit {
-  @ViewChild(SplitButton) btnActions!: SplitButton;
-
   public filterForm = this._fb.group({
     name: this._fb.control(''),
     phone: this._fb.control(''),
     email: this._fb.control('', [Validators.email]),
   });
-  public actions = PrimeNGConst.buildActions(() => this._activeMany(), () => this._actionRemove());
   public currentPage = ApiConst.DEFAULT_PAGE;
   public limitPaging = ApiConst.DEFAULT_LIMIT;
   public loading = true;
-  public selectedCustomers: ICustomer[] = [];
-  public customers!: Partial<ICustomer>[];
+  public checked: ICustomer[] = [];
+  public data!: Partial<ICustomer>[];
   public totalRecords!: number;
 
   constructor(
     private _fb: NonNullableFormBuilder,
-    private _confirmationService: ConfirmationService,
     private _customersService: CustomersService
   ) {}
 
@@ -39,57 +33,55 @@ export class CustomersViewComponent implements OnInit {
     return this.filterForm.controls.email;
   }
 
-  get idsOfSelectedCustomers(): string[] {
-    return this.selectedCustomers.map((customer) => customer.id as string);
+  get checkedIds(): string[] {
+    return this.checked.map((customer) => customer.id as string);
   }
 
-  get filterParams(): ICustomerFilters {
+  get filters(): ICustomerFilters {
     const filters = this.filterForm.getRawValue();
     return { ...filters, page: this.currentPage, per_page: this.limitPaging };
   }
 
   public ngOnInit(): void {
-    this.getCustomers();
+    this.list();
   }
 
   public onLazyLoad(event: TablePageEvent): void {
     this.currentPage = Math.round((event.first + event.rows) / event.rows);
     this.limitPaging = event.rows;
-    this.getCustomers();
+    this.list();
   }
 
-  public getCustomers(resetFilter = false): void {
+  public list(resetFilter = false): void {
     if (resetFilter)
       this.filterForm.reset();
 
     this.loading = true;
-    this.customers = Array.from({ length: this.limitPaging }).map(_ => new Object());
+    this.data = Array.from({ length: this.limitPaging }).map(_ => new Object());
 
-    this._customersService.get(this.filterParams).subscribe({
+    this._customersService.list(this.filters).subscribe({
       next: (res) => {
-        this.customers = res.data;
+        this.data = res.data;
         this.totalRecords = res.total;
       }
     }).add(() => this.loading = false);
   }
 
-  private _activeMany(): void {}
+  public onActive(): void {
+    if (!this.checkedIds.length) return;
 
-  private _actionRemove(): void {
-    if (!this.selectedCustomers.length)
-      return;
-
-    this._confirmationService.confirm({
-      ...PrimeNGConst.CONFIRMATION,
-      target: this.btnActions.containerViewChild?.nativeElement,
-      accept: () => this._deleteCustomers(),
+    this._customersService.activeMany(this.checkedIds).subscribe(() => {
+      this.checked = [];
+      this.list();
     });
   }
 
-  private _deleteCustomers(): void {
-    this._customersService.deleteMany(this.idsOfSelectedCustomers).subscribe(() => {
-      this.selectedCustomers = [];
-      this.getCustomers();
+  public onInactive(): void {
+    if (!this.checkedIds.length) return;
+
+    this._customersService.inactiveMany(this.checkedIds).subscribe(() => {
+      this.checked = [];
+      this.list();
     });
   }
 }

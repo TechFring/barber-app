@@ -1,4 +1,4 @@
-import { Confirmation, MenuItem, MenuItemCommandEvent } from 'primeng/api';
+import { Confirmation } from 'primeng/api';
 import { LocaleSettings } from 'primeng/calendar';
 
 export abstract class PrimeNGConst {
@@ -19,12 +19,4 @@ export abstract class PrimeNGConst {
     today: 'Hoje',
     clear: 'Limpar'
   };
-
-  public static buildActions(activeCommand: (event: MenuItemCommandEvent) => void, inactiveCommand: (event: MenuItemCommandEvent) => void): MenuItem[] {
-    const actions: MenuItem[] = [
-      { label: 'Ativar', command: activeCommand },
-      { label: 'Inativar', command: inactiveCommand },
-    ];
-    return actions;
-  }
 }
