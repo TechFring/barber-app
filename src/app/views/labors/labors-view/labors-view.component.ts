@@ -55,7 +55,7 @@ export class LaborsViewComponent implements OnInit {
     this.loading = true;
     this.data = Array.from({ length: this.limitPaging }).map(_ => new Object());
 
-    this._laborsService.get(this.filters).subscribe({
+    this._laborsService.list(this.filters).subscribe({
       next: (res) => {
         this.data = res.data;
         this.totalRecords = res.total;
