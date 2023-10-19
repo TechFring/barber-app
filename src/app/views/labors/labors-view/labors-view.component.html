@@ -55,8 +55,7 @@
     </ng-template>
 
     <ng-template pTemplate="paginatorleft">
-      <p-confirmPopup></p-confirmPopup>
-      <p-splitButton label="Ações" [model]="actions" styleClass="p-button-raised p-button-text"></p-splitButton>
+      <ng-template appActionsButton (onActive)="onActive()" (onInactive)="onInactive()"></ng-template>
     </ng-template>
   </p-table>
 </div>

@@ -1,4 +1,3 @@
-import { IDropdownItem } from '@core/models';
 import { Confirmation, MenuItem, MenuItemCommandEvent } from 'primeng/api';
 import { LocaleSettings } from 'primeng/calendar';
 
@@ -9,12 +8,6 @@ export abstract class PrimeNGConst {
     acceptLabel: 'Sim',
     rejectLabel: 'Não',
   };
-
-  public static readonly DROPDOWN_ITEMS: IDropdownItem[] = [
-    { label: 'Sem filtro', value: undefined },
-    { label: 'Sim', value: true },
-    { label: 'Não', value: false },
-  ];
 
   public static readonly CALENDAR_LOCALE: LocaleSettings = {
     firstDayOfWeek: 0,

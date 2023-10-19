@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NonNullableFormBuilder } from '@angular/forms';
 import { TablePageEvent } from 'primeng/table';
 
-import { ApiConst, PrimeNGConst } from '@core/constants';
+import { ApiConst } from '@core/constants';
 import { ILabor, ILaborFilters } from '@core/models';
 import { LaborsService } from '@core/services';
 import { timeToMinutes } from '@shared/utils';
@@ -17,7 +17,6 @@ export class LaborsViewComponent implements OnInit {
     name: this._fb.control(''),
     duration: this._fb.control(''),
   });
-  public actions = PrimeNGConst.buildActions(() => this._activeMany(), () => this._inactiveMany());
   public currentPage = ApiConst.DEFAULT_PAGE;
   public limitPaging = ApiConst.DEFAULT_LIMIT;
   public loading = true;
@@ -56,8 +55,6 @@ export class LaborsViewComponent implements OnInit {
     this.loading = true;
     this.data = Array.from({ length: this.limitPaging }).map(_ => new Object());
 
-    console.log(this.filters)
-
     this._laborsService.get(this.filters).subscribe({
       next: (res) => {
         this.data = res.data;
@@ -66,14 +63,18 @@ export class LaborsViewComponent implements OnInit {
     }).add(() => this.loading = false);
   }
 
-  private _activeMany(): void {
+  public onActive(): void {
+    if (!this.checkedIds.length) return;
+
     this._laborsService.activeMany(this.checkedIds).subscribe(() => {
       this.checked = [];
       this.list();
     });
   }
 
-  private _inactiveMany(): void {
+  public onInactive(): void {
+    if (!this.checkedIds.length) return;
+
     this._laborsService.inactiveMany(this.checkedIds).subscribe(() => {
       this.checked = [];
       this.list();

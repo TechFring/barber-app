@@ -4,7 +4,7 @@ import { TablePageEvent } from 'primeng/table';
 
 import { IBarber, IBarberFilters } from '@core/models';
 import { BarbersService } from '@core/services';
-import { ApiConst, PrimeNGConst } from '@core/constants';
+import { ApiConst } from '@core/constants';
 
 @Component({
   selector: 'app-barbers-view',
@@ -17,7 +17,6 @@ export class BarbersViewComponent implements OnInit {
     email: this._fb.control(''),
     document: this._fb.control('')
   });
-  public actions = PrimeNGConst.buildActions(() => this._activeMany(), () => this._inactiveMany());
   public currentPage = ApiConst.DEFAULT_PAGE;
   public limitPaging = ApiConst.DEFAULT_LIMIT;
   public loading = true;
@@ -64,14 +63,18 @@ export class BarbersViewComponent implements OnInit {
     }).add(() => this.loading = false);
   }
 
-  private _activeMany(): void {
+  public onActive(): void {
+    if (!this.checkedIds.length) return;
+
     this._barbersService.activeMany(this.checkedIds).subscribe(() => {
       this.checked = [];
       this.list();
     });
   }
 
-  private _inactiveMany(): void {
+  public onInactive(): void {
+    if (!this.checkedIds.length) return;
+
     this._barbersService.inactiveMany(this.checkedIds).subscribe(() => {
       this.checked = [];
       this.list();
