@@ -8,8 +8,8 @@ import { Subscription } from 'rxjs';
 })
 export class ToggleStatusButtonDirective implements OnChanges, OnDestroy {
   @Input('appToggleStatusButton') public isActive!: boolean;
-  @Output() public onInactive = new EventEmitter<MouseEvent>;
-  @Output() public onActive = new EventEmitter<MouseEvent>;
+  @Output() public onInactive = new EventEmitter<MouseEvent>();
+  @Output() public onActive = new EventEmitter<MouseEvent>();
 
   private readonly ACTIVE = {
     label: 'Ativar',
