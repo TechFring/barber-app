@@ -20,8 +20,8 @@ export class LaborsService {
     return this._http.get<ILabor>(`${ApiConst.ENDPOINT_LABORS}/${id}`);
   }
 
-  public create(labor: ILaborFilters): Observable<ILaborFilters> {
-    return this._http.post<ILaborFilters>(ApiConst.ENDPOINT_LABORS, labor);
+  public create(labor: ILabor): Observable<ILabor> {
+    return this._http.post<ILabor>(ApiConst.ENDPOINT_LABORS, labor);
   }
 
   public update(labor: ILabor): Observable<ILabor> {

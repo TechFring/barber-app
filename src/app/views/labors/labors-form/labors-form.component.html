@@ -1,1 +1,27 @@
-<p>labors-form works!</p>
+<h1 class="text-xl mb-5">{{ pageTitle }}</h1>
+
+<form class="formgrid grid pb-8" [formGroup]="formGroup">
+  <p-toast></p-toast>
+
+  <div class="grid col-12">
+    <div class="col-12 xl:col-3 flex flex-column gap-2">
+      <label>Nome*</label>
+      <input pInputText formControlName="name" />
+      <small class="text-danger" *ngIf="nameControl.errors?.['maxlength'] as error">
+        Máximo {{ error.requiredLength }} caracteres
+      </small>
+    </div>
+
+    <div class="col-12 mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2">
+      <label>Duração*</label>
+      <input pInputText type="time" formControlName="duration" />
+    </div>
+  </div>
+</form>
+
+<footer class="footer">
+  <p-confirmPopup></p-confirmPopup>
+  <p-button styleClass="p-button-sm" (onClick)="onSave()">Salvar</p-button>
+  <p-button styleClass="p-button-raised p-button-text p-button-sm" routerLink="/labors">Voltar</p-button>
+  <ng-template *ngIf="editMode" [appToggleStatusButton]="isActive" (onActive)="onActive()" (onInactive)="onInactive()"></ng-template>
+</footer>

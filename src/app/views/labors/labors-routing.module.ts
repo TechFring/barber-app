@@ -7,7 +7,7 @@ import { LaborsFormComponent } from './labors-form/labors-form.component';
 const routes: Routes = [
   { path: '', component: LaborsViewComponent },
   { path: 'new', component: LaborsFormComponent },
-  { path: ':laborId', component: LaborsFormComponent },
+  { path: ':id', component: LaborsFormComponent },
 ];
 
 @NgModule({

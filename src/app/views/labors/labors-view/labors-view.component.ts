@@ -35,7 +35,7 @@ export class LaborsViewComponent implements OnInit {
 
   get filters(): ILaborFilters {
     const { name, duration } = this.filterForm.getRawValue();
-    return { name, duration: duration ? timeToMinutes(duration) : duration, page: this.currentPage, per_page: this.limitPaging };
+    return { name, duration: timeToMinutes(duration), page: this.currentPage, per_page: this.limitPaging };
   }
 
   public ngOnInit(): void {

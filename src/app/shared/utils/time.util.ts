@@ -1,6 +1,7 @@
 const SECONDS = 60;
 
 export function timeToMinutes(time: string): number {
+  if (!time) return 0;
   const [hours, minutes] = time.split(':');
   return Number(hours) * SECONDS + Number(minutes);
 }

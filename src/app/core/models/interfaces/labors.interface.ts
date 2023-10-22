@@ -1,7 +1,7 @@
 export interface ILabor {
   id?: string;
   name: string;
-  duration: number | string;
+  duration: number;
   active?: boolean;
   created_at?: string;
   updated_at?: string;
