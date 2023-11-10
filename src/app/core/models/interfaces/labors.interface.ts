@@ -7,7 +7,7 @@ export interface ILabor {
   updated_at?: string;
 }
 
-export interface ILaborFilters extends Partial<Pick<ILabor, 'name' | 'duration' | 'active'>> {
+export interface ILaborFilters extends Partial<Pick<ILabor, 'name' | 'duration'>> {
   page: number;
   per_page: number;
 }

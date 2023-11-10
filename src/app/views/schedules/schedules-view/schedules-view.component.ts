@@ -1,38 +1,11 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { CalendarOptions, EventClickArg } from '@fullcalendar/core';
-import interactionPlugin from '@fullcalendar/interaction';
-import listPlugin from '@fullcalendar/list';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import { EventInput } from '@fullcalendar/core';
+import { Component, ViewChild } from '@angular/core';
+import { CalendarOptions, DatesSetArg, EventInput } from '@fullcalendar/core';
+import { EventImpl } from '@fullcalendar/core/internal';
+import { Subscription, filter } from 'rxjs';
 
+import { FULLCALENDAR_OPTIONS } from '@core/constants';
 import { SchedulesDialogComponent } from '@views/schedules';
-
-let eventGuid = 0;
-const TODAY_STR = new Date().toISOString().replace(/T.*$/, ''); // YYYY-MM-DD of today
-
-export const INITIAL_EVENTS: EventInput[] = [
-  {
-    id: createEventId(),
-    title: 'All-day event',
-    start: TODAY_STR
-  },
-  {
-    id: createEventId(),
-    title: 'Timed event',
-    start: TODAY_STR + 'T00:00:00',
-    end: TODAY_STR + 'T03:00:00'
-  },
-  {
-    id: createEventId(),
-    title: 'Timed event',
-    start: TODAY_STR + 'T12:00:00',
-    end: TODAY_STR + 'T15:00:00'
-  }
-];
-
-export function createEventId() {
-  return String(eventGuid++);
-}
+import { SchedulesService } from '@core/services';
 
 @Component({
   selector: 'app-schedules-view',
@@ -42,42 +15,34 @@ export function createEventId() {
 export class SchedulesViewComponent {
   @ViewChild(SchedulesDialogComponent) public schedulesDialog!: SchedulesDialogComponent;
 
+  public schedules!: EventInput[];
+  public event!: DatesSetArg;
+  public subscription!: Subscription;
+
   public calendarOptions: CalendarOptions = {
-    initialView: 'timeGridWeek',
-    plugins: [
-      interactionPlugin,
-      listPlugin,
-      timeGridPlugin,
-    ],
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'timeGridWeek,timeGridDay listWeek'
-    },
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
-    weekends: true,
-    // editable: true,
-    // selectable: true,
-    selectMirror: true,
-    dayMaxEvents: true,
-    eventClick: (event) => this.onClickEvent(event),
-    locale: 'pt-br',
-    buttonText: {
-      today: 'Hoje',
-      day: 'Dia',
-      week: 'Semana',
-      list: 'Todos'
-    } as any,
-    allDayText: 'dia todo'
+    ...FULLCALENDAR_OPTIONS,
+    eventClick: ({ event }) => this.openDialog(event),
+    datesSet: (event) => this._loadData(event)
   };
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private _schedulesService: SchedulesService) {}
 
-  handleDateClick(arg: any) {
-    alert('date click! ' + arg.dateStr);
+  public openDialog(event?: EventImpl): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.subscription = this.schedulesDialog.open(event)
+      .pipe(filter((changed) => changed))
+      .subscribe(() => this._loadData(this.event));
   }
 
-  onClickEvent({ event }: EventClickArg) {
-    this.schedulesDialog.open(event);
+  private _loadData(event: DatesSetArg) {
+    this.event = event;
+    const { startStr, endStr } = event;
+
+    this._schedulesService.list(startStr, endStr).subscribe((res) => {
+      this.schedules = res;
+    });
   }
 }

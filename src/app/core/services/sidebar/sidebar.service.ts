@@ -10,8 +10,8 @@ export class SidebarService {
     { label: 'Agendamentos', icon: PrimeIcons.CALENDAR, url: '/schedules' },
     { label: 'Barbeiros', icon: PrimeIcons.ID_CARD, url: '/barbers' },
     { label: 'Clientes', icon: PrimeIcons.USER, url: '/customers' },
-    { label: 'Logs', icon: PrimeIcons.DATABASE, url: '/logs' },
     { label: 'Serviços', icon: PrimeIcons.BOX, url: '/labors' },
+    { label: 'Logs', icon: PrimeIcons.DATABASE, url: '/logs' },
   ];
   private _expanded$ = new BehaviorSubject<boolean>(true);
 

@@ -8,6 +8,9 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { ChipModule } from 'primeng/chip';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmationService } from 'primeng/api';
 
 import { SchedulesRoutingModule } from './schedules-routing.module';
 import { SchedulesViewComponent } from './schedules-view/schedules-view.component';
@@ -28,7 +31,10 @@ import { SchedulesDialogComponent } from './schedules-dialog/schedules-dialog.co
     DialogModule,
     DropdownModule,
     InputTextModule,
-    MultiSelectModule
-  ]
+    MultiSelectModule,
+    ChipModule,
+    ConfirmPopupModule
+  ],
+  providers: [ConfirmationService]
 })
 export class SchedulesModule { }

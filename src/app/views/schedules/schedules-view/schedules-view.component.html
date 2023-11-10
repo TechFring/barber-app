@@ -1,7 +1,7 @@
-<full-calendar [options]="calendarOptions"></full-calendar>
+<full-calendar [options]="calendarOptions" [events]="schedules"></full-calendar>
 
 <app-schedules-dialog #scheduleForm></app-schedules-dialog>
 
 <footer class="footer">
-  <p-button styleClass="p-button-sm" (onClick)="scheduleForm.open()">Novo agendamento</p-button>
+  <p-button styleClass="p-button-sm" (onClick)="openDialog()">Novo agendamento</p-button>
 </footer>

@@ -24,9 +24,10 @@ export class LaborsService {
     return this._http.post<ILabor>(ApiConst.ENDPOINT_LABORS, labor);
   }
 
-  public update(labor: ILabor): Observable<ILabor> {
+  public update(labor: Partial<ILabor>): Observable<ILabor> {
     const id = labor.id;
     delete labor.id;
+    delete labor.duration;
     return this._http.put<ILabor>(`${ApiConst.ENDPOINT_LABORS}/${id}`, labor);
   }
 

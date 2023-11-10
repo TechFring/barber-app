@@ -8,4 +8,5 @@ export abstract class ApiConst {
   public static readonly ENDPOINT_BARBERS = `${environment.apiUrl}/barber`;
   public static readonly ENDPOINT_CUSTOMERS = `${environment.apiUrl}/customer`;
   public static readonly ENDPOINT_LABORS = `${environment.apiUrl}/labor`;
+  public static readonly ENDPOINT_SCHEDULES = `${environment.apiUrl}/schedule`;
 }

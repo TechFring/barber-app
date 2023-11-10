@@ -9,7 +9,7 @@ export interface IBarber {
   updated_at?: string;
 }
 
-export interface IBarberFilters extends Pick<IBarber, 'name' | 'email' | 'document' | 'active'> {
+export interface IBarberFilters extends Partial<Pick<IBarber, 'name' | 'email' | 'document'>> {
   page: number;
   per_page: number;
 }

@@ -1,5 +1,5 @@
 export interface ICustomer {
-  id?: number | string;
+  id?: string;
   name: string;
   phone: string;
   email: string;
@@ -8,7 +8,7 @@ export interface ICustomer {
   updated_at?: string;
 }
 
-export interface ICustomerFilters extends Pick<ICustomer, 'name' | 'phone' | 'email' | 'active'> {
+export interface ICustomerFilters extends Partial<Pick<ICustomer, 'name' | 'phone' | 'email'>> {
   page: number;
   per_page: number;
 }

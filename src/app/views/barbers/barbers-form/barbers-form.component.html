@@ -4,7 +4,7 @@
   <p-toast></p-toast>
 
   <div class="grid col-12">
-    <div class="col-12 xl:col-3 flex flex-column gap-2">
+    <div class="xl:col-3 flex flex-column gap-2">
       <label>Nome*</label>
       <input pInputText formControlName="name" />
       <small class="text-danger" *ngIf="nameControl.errors?.['maxlength'] as error">
@@ -12,17 +12,17 @@
       </small>
     </div>
 
-    <div class="col-12 mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2">
+    <div class="mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2">
       <label>Data de nascimento*</label>
       <p-calendar dateFormat="dd/mm/yy" styleClass="w-full" formControlName="date_birth" [readonlyInput]="true"></p-calendar>
     </div>
 
-    <div class="col-12 mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2">
+    <div class="mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2 pb-4">
       <label>Documento*</label>
       <p-inputMask formControlName="document" styleClass="w-full" mask="999.999.999-99" [unmask]="true" />
     </div>
 
-    <div class="col-12 mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2">
+    <div class="mt-3 xl:col-3 xl:mt-0 flex flex-column gap-2 relative pb-4">
       <label>Email*</label>
       <input pInputText formControlName="email" />
       <small class="text-danger" *ngIf="emailControl.touched && emailControl.errors?.['email']">
