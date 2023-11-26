@@ -1,8 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 
 import { ILabor } from '@core/models';
 import { LaborsService } from '@core/services';
@@ -26,7 +24,6 @@ export class LaborsFormComponent {
   constructor(
     private _fb: NonNullableFormBuilder,
     private _router: Router,
-    private _messageService: MessageService,
     private _laborsService: LaborsService,
   ){}
 
@@ -67,24 +64,15 @@ export class LaborsFormComponent {
       ? this._laborsService.update(labor)
       : this._laborsService.create(labor);
 
-    request$.subscribe({
-      next: () => this._router.navigateByUrl('/labors'),
-      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
-    });
+    request$.subscribe(() => this._router.navigateByUrl('/labors'));
   }
 
   public onActive(): void {
-    this._laborsService.active(this.id as string).subscribe({
-      next: () => this.isActive = true,
-      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
-    });
+    this._laborsService.active(this.id as string).subscribe(() => this.isActive = true);
   }
 
   public onInactive(): void {
-    this._laborsService.inactive(this.id as string).subscribe({
-      next: () => this.isActive = false,
-      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
-    });
+    this._laborsService.inactive(this.id as string).subscribe(() => this.isActive = false);
   }
 
   private _loadData(): void {

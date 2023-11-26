@@ -8,7 +8,7 @@ import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
-import { SidebarService } from '@core/services';
+import { SidebarService, UsersService } from '@core/services';
 
 @Component({
   selector: 'app-sidebar',
@@ -28,7 +28,11 @@ export class SidebarComponent {
   public expanded!: boolean;
   public currentRoute!: string | null;
 
-  constructor(private _router: Router, private _sidebarService: SidebarService) {
+  constructor(
+    private _router: Router,
+    private _sidebarService: SidebarService,
+    private _userService: UsersService,
+  ) {
     this._initCurrentRoute();
     this._initExpanded();
     this._initSearchControl();
@@ -41,6 +45,10 @@ export class SidebarComponent {
     timer(this.DELAY_TOGGLE_SIDEBAR).subscribe(() => {
       this.elInputSearch.nativeElement.focus();
     });
+  }
+
+  public logout(): void {
+    this._userService.logout();
   }
 
   private _initCurrentRoute(): void {

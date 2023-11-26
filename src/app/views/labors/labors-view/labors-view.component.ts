@@ -29,10 +29,6 @@ export class LaborsViewComponent implements OnInit {
     private _laborsService: LaborsService
   ) {}
 
-  get checkedIds(): string[] {
-    return this.checked.map((labor) => labor.id as string);
-  }
-
   get filters(): ILaborFilters {
     const { name, duration } = this.filterForm.getRawValue();
     return { name, duration: timeToMinutes(duration), page: this.currentPage, per_page: this.limitPaging };
@@ -59,23 +55,32 @@ export class LaborsViewComponent implements OnInit {
       next: (res) => {
         this.data = res.data;
         this.totalRecords = res.total;
-      }
+      },
+      error: () => this.data = [],
     }).add(() => this.loading = false);
   }
 
   public onActive(): void {
-    if (!this.checkedIds.length) return;
+    const checkedIds = this.checked.filter(b => !b.active).map(b => b.id as string);
 
-    this._laborsService.activeMany(this.checkedIds).subscribe(() => {
+    if (!checkedIds.length) {
+      return;
+    }
+
+    this._laborsService.activeMany(checkedIds).subscribe(() => {
       this.checked = [];
       this.list();
     });
   }
 
   public onInactive(): void {
-    if (!this.checkedIds.length) return;
+    const checkedIds = this.checked.filter(b => b.active).map(b => b.id as string);
 
-    this._laborsService.inactiveMany(this.checkedIds).subscribe(() => {
+    if (!checkedIds.length) {
+      return;
+    }
+
+    this._laborsService.inactiveMany(checkedIds).subscribe(() => {
       this.checked = [];
       this.list();
     });

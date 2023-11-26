@@ -1,0 +1,32 @@
+.background {
+  width: 100%;
+  height: 100vh;
+  background: url('/assets/images/background-login.jpg') no-repeat right;
+  background-size: 60% auto;
+
+  &:before {
+    content: '';
+    background: linear-gradient(90deg, rgba(28, 28, 40, 1) 17%, rgba(28, 28, 40, 0.9) 100%);
+    position: absolute;
+    right: 0;
+    width: 60%;
+    height: 100%;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 90vw;
+  height: 100vh;
+  display: block;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.logo {
+  width: 100%;
+  max-width: 130px;
+}

@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 
 import { IBarber } from '@core/models';
 import { BarbersService } from '@core/services';
@@ -10,7 +8,6 @@ import { BarbersService } from '@core/services';
 @Component({
   selector: 'app-barbers-form',
   templateUrl: './barbers-form.component.html',
-  styleUrls: ['./barbers-form.component.scss']
 })
 export class BarbersFormComponent implements OnInit {
   @Input() public id?: string;
@@ -27,7 +24,6 @@ export class BarbersFormComponent implements OnInit {
   constructor(
     private _fb: NonNullableFormBuilder,
     private _router: Router,
-    private _messageService: MessageService,
     private _barbersService: BarbersService,
   ) {}
 
@@ -65,23 +61,18 @@ export class BarbersFormComponent implements OnInit {
       ? this._barbersService.update(barber)
       : this._barbersService.create(barber);
 
-    request$.subscribe({
-      next: () => this._router.navigateByUrl('/barbers'),
-      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
-    });
+    request$.subscribe(() => this._router.navigateByUrl('/barbers'));
   }
 
   public onActive(): void {
     this._barbersService.active(this.id as string).subscribe({
       next: () => this.isActive = true,
-      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
     });
   }
 
   public onInactive(): void {
     this._barbersService.inactive(this.id as string).subscribe({
       next: () => this.isActive = false,
-      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
     });
   }
 

@@ -33,10 +33,6 @@ export class CustomersViewComponent implements OnInit {
     return this.filterForm.controls.email;
   }
 
-  get checkedIds(): string[] {
-    return this.checked.map((customer) => customer.id as string);
-  }
-
   get filters(): ICustomerFilters {
     const filters = this.filterForm.getRawValue();
     return { ...filters, page: this.currentPage, per_page: this.limitPaging };
@@ -63,23 +59,32 @@ export class CustomersViewComponent implements OnInit {
       next: (res) => {
         this.data = res.data;
         this.totalRecords = res.total;
-      }
+      },
+      error: () => this.data = [],
     }).add(() => this.loading = false);
   }
 
   public onActive(): void {
-    if (!this.checkedIds.length) return;
+    const checkedIds = this.checked.filter(b => !b.active).map(b => b.id as string);
 
-    this._customersService.activeMany(this.checkedIds).subscribe(() => {
+    if (!checkedIds.length) {
+      return;
+    }
+
+    this._customersService.activeMany(checkedIds).subscribe(() => {
       this.checked = [];
       this.list();
     });
   }
 
   public onInactive(): void {
-    if (!this.checkedIds.length) return;
+    const checkedIds = this.checked.filter(b => b.active).map(b => b.id as string);
 
-    this._customersService.inactiveMany(this.checkedIds).subscribe(() => {
+    if (!checkedIds.length) {
+      return;
+    }
+
+    this._customersService.inactiveMany(checkedIds).subscribe(() => {
       this.checked = [];
       this.list();
     });

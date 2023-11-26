@@ -1,15 +1,15 @@
 <h1 class="text-xl mb-5">Lista de serviços</h1>
 
 <app-filter (onFilter)="list()" (onClear)="list(true)">
-  <form [formGroup]="filterForm" class="formgrid grid pb-4">
-    <div class="col flex flex-column gap-2">
+  <form [formGroup]="filterForm" class="formgrid grid">
+    <div class="col flex flex-column gap-2 pb-4">
       <label>Nome</label>
       <input pInputText formControlName="name" />
     </div>
 
-    <div class="col flex flex-column gap-2">
+    <div class="col flex flex-column gap-2 pb-4">
       <label>Duração</label>
-      <input pInputText formControlName="duration" type="time" />
+      <p-inputMask formControlName="duration" styleClass="w-full" mask="99:99" />
     </div>
   </form>
 </app-filter>

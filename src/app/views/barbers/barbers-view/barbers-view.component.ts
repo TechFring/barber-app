@@ -9,7 +9,6 @@ import { ApiConst } from '@core/constants';
 @Component({
   selector: 'app-barbers-view',
   templateUrl: './barbers-view.component.html',
-  styleUrls: ['./barbers-view.component.scss']
 })
 export class BarbersViewComponent implements OnInit {
   public filterForm = this._fb.group({
@@ -29,10 +28,6 @@ export class BarbersViewComponent implements OnInit {
     private _barbersService: BarbersService
   ) {}
 
-  get checkedIds(): string[] {
-    return this.checked.map((barber) => barber.id as string);
-  }
-
   get filters(): IBarberFilters {
     const filters = this.filterForm.getRawValue();
     return { ...filters, page: this.currentPage, per_page: this.limitPaging };
@@ -49,8 +44,9 @@ export class BarbersViewComponent implements OnInit {
   }
 
   public list(resetFilter = false): void {
-    if (resetFilter)
+    if (resetFilter) {
       this.filterForm.reset();
+    }
 
     this.loading = true;
     this.data = Array.from({ length: this.limitPaging }).map(_ => new Object());
@@ -59,23 +55,32 @@ export class BarbersViewComponent implements OnInit {
       next: (res) => {
         this.data = res.data;
         this.totalRecords = res.total;
-      }
+      },
+      error: () => this.data = [],
     }).add(() => this.loading = false);
   }
 
   public onActive(): void {
-    if (!this.checkedIds.length) return;
+    const checkedIds = this.checked.filter(b => !b.active).map(b => b.id as string);
 
-    this._barbersService.activeMany(this.checkedIds).subscribe(() => {
+    if (!checkedIds.length) {
+      return;
+    }
+
+    this._barbersService.activeMany(checkedIds).subscribe(() => {
       this.checked = [];
       this.list();
     });
   }
 
   public onInactive(): void {
-    if (!this.checkedIds.length) return;
+    const checkedIds = this.checked.filter(b => b.active).map(b => b.id as string);
 
-    this._barbersService.inactiveMany(this.checkedIds).subscribe(() => {
+    if (!checkedIds.length) {
+      return;
+    }
+
+    this._barbersService.inactiveMany(checkedIds).subscribe(() => {
       this.checked = [];
       this.list();
     });

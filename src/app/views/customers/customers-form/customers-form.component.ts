@@ -1,11 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
 
 import { CustomersService } from '@core/services';
 import { ICustomer } from '@core/models';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-customers-form',
@@ -26,7 +24,6 @@ export class CustomersFormComponent {
   constructor(
     private _fb: NonNullableFormBuilder,
     private _router: Router,
-    private _messageService: MessageService,
     private _customersService: CustomersService,
   ) {}
 
@@ -64,24 +61,15 @@ export class CustomersFormComponent {
       ? this._customersService.update(customer)
       : this._customersService.create(customer);
 
-    request$.subscribe({
-      next: () => this._router.navigateByUrl('/customers'),
-      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
-    });
+    request$.subscribe(() => this._router.navigateByUrl('/customers'));
   }
 
   public onActive(): void {
-    this._customersService.active(this.id as string).subscribe({
-      next: () => this.isActive = true,
-      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
-    });
+    this._customersService.active(this.id as string).subscribe(() => this.isActive = true);
   }
 
   public onInactive(): void {
-    this._customersService.inactive(this.id as string).subscribe({
-      next: () => this.isActive = false,
-      error: (err: HttpErrorResponse) => this._messageService.add({ severity: 'error', detail: err.error.message })
-    });
+    this._customersService.inactive(this.id as string).subscribe(() => this.isActive = false);
   }
 
   private _loadData(): void {

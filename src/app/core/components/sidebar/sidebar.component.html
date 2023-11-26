@@ -1,5 +1,5 @@
 <aside class="sidebar" [class.sidebar--expanded]="expanded">
-  <img class="sidebar-logo" src="assets/images/logo.png" />
+  <img class="sidebar-logo" src="assets/images/logo.png" alt="Logo" />
 
   <span class="p-input-icon-left" *ngIf="expanded">
     <i class="pi pi-search"></i>
@@ -34,7 +34,7 @@
 
   <ul class="sidebar-settings">
     <li class="sidebar-settings-item">
-      <a class="sidebar-link">
+      <a class="sidebar-link" (click)="logout()">
         <i class="sidebar-icon pi pi-sign-out"></i>
         <span *ngIf="expanded">Sair</span>
       </a>

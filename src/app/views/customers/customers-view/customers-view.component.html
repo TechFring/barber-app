@@ -12,10 +12,10 @@
       <p-inputMask formControlName="phone" styleClass="w-full" mask="(99) 99999-9999" [autoClear]="false" [unmask]="true" />
     </div>
 
-    <div class="col flex flex-column gap-2 relative pb-4">
+    <div class="col flex flex-column gap-2 pb-4 relative">
       <label>Email</label>
       <input pInputText formControlName="email" />
-      <small class="text-danger absolute bottom-0 -mb-3" *ngIf="emailControl.errors?.['email']">
+      <small class="text-danger absolute bottom-0" *ngIf="emailControl.errors?.['email']">
         Email inválido
       </small>
     </div>
