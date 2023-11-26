@@ -10,4 +10,4 @@ import { CustomersViewComponent } from './customers-view/customers-view.componen
   declarations: [CustomersViewComponent, CustomersFormComponent],
   imports: [SharedModule, CustomersRoutingModule, RegisterStatusDirective],
 })
-export class CustomersModule {}
+export default class CustomersModule {}

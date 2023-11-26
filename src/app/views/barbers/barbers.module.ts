@@ -14,4 +14,4 @@ import { BarbersFormComponent } from './barbers-form/barbers-form.component';
     CalendarModule,
   ],
 })
-export class BarbersModule {}
+export default class BarbersModule {}

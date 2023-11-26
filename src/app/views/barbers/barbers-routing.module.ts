@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { BarbersViewComponent, BarbersFormComponent } from '@views/barbers';
+import { BarbersViewComponent } from './barbers-view/barbers-view.component';
+import { BarbersFormComponent } from './barbers-form/barbers-form.component';
 
 const routes: Routes = [
   { path: '', component: BarbersViewComponent },
@@ -11,6 +12,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BarbersRoutingModule { }
+export class BarbersRoutingModule {}

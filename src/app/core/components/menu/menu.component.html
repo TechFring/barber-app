@@ -2,7 +2,6 @@
   <i class="pi pi-bars sidebar-control" (click)="toggleSidebar()"></i>
 
   <div class="flex flex-column ml-3">
-    <span class="text-lg font-semibold">Barbeiros</span>
-    <span class="text-sm breadcrumb mt-1">Home / Barbeiros</span>
+    <span class="text-lg font-semibold">{{ menuTitle$ | async }}</span>
   </div>
 </header>

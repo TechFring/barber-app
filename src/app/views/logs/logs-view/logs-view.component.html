@@ -42,10 +42,10 @@
       </tr>
 
       <tr *ngIf="!loading">
-        <td style="width: 80px">
+        <td class="w-4rem">
           <p-button
             type="button"
-            styleClass="p-button-rounded p-button-text"
+            styleClass="p-button-rounded p-button-text p-button-plain w-2rem h-2rem"
             [pRowToggler]="log"
             [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
           ></p-button>
@@ -56,7 +56,8 @@
     </ng-template>
 
     <ng-template pTemplate="rowexpansion" let-log>
-      <tr>
+      <tr class="bg-dark-0">
+        <td></td>
         <td colspan="100%">
           <h3 class="text-base font-semibold">Descrição completa</h3>
           <p class="mt-2 line-height-2">{{ log.description }}</p>

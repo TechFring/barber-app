@@ -11,6 +11,7 @@ export class SidebarService {
     { label: 'Barbeiros', icon: PrimeIcons.ID_CARD, url: '/barbers' },
     { label: 'Clientes', icon: PrimeIcons.USER, url: '/customers' },
     { label: 'Serviços', icon: PrimeIcons.BOX, url: '/labors' },
+    { label: 'Usuários', icon: PrimeIcons.USERS, url: '/users' },
     { label: 'Logs', icon: PrimeIcons.DATABASE, url: '/logs' },
   ];
   private _expanded$ = new BehaviorSubject<boolean>(true);

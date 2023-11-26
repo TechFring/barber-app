@@ -4,8 +4,8 @@ import { EventImpl } from '@fullcalendar/core/internal';
 import { Subscription, filter } from 'rxjs';
 
 import { FULLCALENDAR_OPTIONS } from '@core/constants';
-import { SchedulesDialogComponent } from '@views/schedules';
 import { SchedulesService } from '@core/services';
+import { SchedulesDialogComponent } from '../schedules-dialog/schedules-dialog.component';
 
 @Component({
   selector: 'app-schedules-view',

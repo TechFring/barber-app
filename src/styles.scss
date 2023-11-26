@@ -63,3 +63,7 @@ td {
   white-space: nowrap;
   overflow: hidden;
 }
+
+.bg-dark-0 {
+  background: darken($dark-1, 3%) !important;
+}

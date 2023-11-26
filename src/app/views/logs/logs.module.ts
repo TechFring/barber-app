@@ -15,4 +15,4 @@ import { LogsViewComponent } from './logs-view/logs-view.component';
     CalendarModule,
   ],
 })
-export class LogsModule {}
+export default class LogsModule {}

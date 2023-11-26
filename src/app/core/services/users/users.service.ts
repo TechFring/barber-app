@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 import { IUser, IUserSession } from '@core/models';
-import { ApiConst, StorageConst } from '@core/constants';
+import { ApiConst, StorageConst, SystemConst } from '@core/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ export class UsersService {
 
   constructor(
     private _http: HttpClient,
-    private _router: Router
+    private _router: Router,
+    private _title: Title,
   ) {}
 
   get authenticatedUser(): IUser | undefined {
@@ -47,8 +49,9 @@ export class UsersService {
   }
 
   public logout(): void {
-    this._authenticatedUser$.next(undefined);
     localStorage.removeItem(StorageConst.TOKEN_KEY);
-    this._router.navigateByUrl('/auth');
+    this._authenticatedUser$.next(undefined);
+    this._title.setTitle(SystemConst.TITLE);
+    this._router.navigateByUrl(SystemConst.ROUTES.auth.url);
   }
 }

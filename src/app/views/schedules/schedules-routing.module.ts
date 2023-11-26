@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { SchedulesViewComponent } from '@views/schedules';
+import { SchedulesViewComponent } from './schedules-view/schedules-view.component';
 
 const routes: Routes = [
   { path: '', component: SchedulesViewComponent },

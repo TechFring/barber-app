@@ -11,4 +11,4 @@ import { RegisterStatusDirective } from '@shared/directives';
   declarations: [LaborsViewComponent, LaborsFormComponent],
   imports: [SharedModule, LaborsRoutingModule, MinutesToTimePipe, RegisterStatusDirective],
 })
-export class LaborsModule { }
+export default class LaborsModule { }

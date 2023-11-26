@@ -9,4 +9,4 @@ import { AuthRoutingModule } from './auth-routing.module';
   declarations: [AuthFormComponent],
   imports: [CommonModule, AuthRoutingModule, SharedModule],
 })
-export class AuthModule {}
+export default class AuthModule {}

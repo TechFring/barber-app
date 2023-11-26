@@ -37,4 +37,4 @@ import { SchedulesDialogComponent } from './schedules-dialog/schedules-dialog.co
   ],
   providers: [ConfirmationService]
 })
-export class SchedulesModule { }
+export default class SchedulesModule { }

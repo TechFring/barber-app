@@ -1,5 +1,3 @@
-export * from './enums/logs.enum';
-
 export * from './interfaces/barbers.interface';
 export * from './interfaces/customers.interface';
 export * from './interfaces/labors.interface';
