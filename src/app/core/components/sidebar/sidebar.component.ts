@@ -4,11 +4,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Observable, debounceTime, distinctUntilChanged, filter, map, startWith, timer } from 'rxjs';
-import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
 import { SidebarService, UsersService } from '@core/services';
+import { ISidebarItem } from '@core/models';
+import { SystemConst } from '@core/constants';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,7 +24,7 @@ export class SidebarComponent {
   private readonly DELAY_KEY_PRESS = 300;
   private readonly DELAY_TOGGLE_SIDEBAR = 300;
   private readonly ROUTE_MATCHER = /([^?\/]+)/;
-  public items$!: Observable<MenuItem[]>;
+  public items$!: Observable<ISidebarItem[]>;
   public searchControl!: FormControl;
   public expanded!: boolean;
   public currentRoute!: string | null;
@@ -51,14 +52,31 @@ export class SidebarComponent {
     this._userService.logout();
   }
 
+  public hasPermission(item: ISidebarItem): boolean {
+    if (!item.level) {
+      return true;
+    }
+
+    const authUser = this._userService.authenticatedUser!;
+    return authUser.level >= item.level;
+  }
+
   private _initCurrentRoute(): void {
+    const routes = this._sidebarService.searchItems('').map((i) => i.url);
+
     this._router.events.pipe(
         takeUntilDestroyed(),
         filter((event) => event instanceof NavigationEnd),
       )
       .subscribe((event: any) => {
-        event.url = event.url !== '/' ? event.url : '/schedules';
-        this.currentRoute = `/${event.url.match(this.ROUTE_MATCHER)[1]}`
+        const defaultUrl = `/${SystemConst.DEFAULT_ROUTE}`;
+
+        try {
+          const replacedUrl = `/${event.url.match(this.ROUTE_MATCHER)[1]}`;
+          this.currentRoute = routes.includes(replacedUrl) ? replacedUrl : defaultUrl;
+        } catch {
+          this.currentRoute = defaultUrl;
+        }
       });
   }
 

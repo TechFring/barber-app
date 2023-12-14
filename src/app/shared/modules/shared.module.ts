@@ -10,26 +10,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
+import { PasswordModule } from 'primeng/password';
 
 import { FilterComponent } from '@shared/components';
 import { ToggleStatusButtonDirective, RegisterStatusDirective, ActionsButtonDirective } from '@shared/directives';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    ConfirmPopupModule,
-    DropdownModule,
-    InputMaskModule,
-    InputTextModule,
-    SkeletonModule,
-    SplitButtonModule,
-    TableModule,
     FilterComponent,
     ToggleStatusButtonDirective,
     RegisterStatusDirective,
     ActionsButtonDirective,
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
   exports: [
     CommonModule,
@@ -46,7 +40,10 @@ import { ToggleStatusButtonDirective, RegisterStatusDirective, ActionsButtonDire
     ToggleStatusButtonDirective,
     RegisterStatusDirective,
     ActionsButtonDirective,
+    PasswordModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, provideNgxMask()],
 })
 export class SharedModule {}

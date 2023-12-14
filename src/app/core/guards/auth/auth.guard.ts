@@ -21,5 +21,5 @@ export const authGuard = (templateAuthenticated = true): CanActivateFn => {
 
       return (inject(Router).navigateByUrl('/'), false);
     }
-  }
-}
+  };
+};

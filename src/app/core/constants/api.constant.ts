@@ -1,3 +1,6 @@
+import { SelectItem } from 'primeng/api';
+
+import { UserLevelEnum } from '@core/models';
 import { environment } from 'src/environments/environment';
 
 export abstract class ApiConst {
@@ -12,4 +15,11 @@ export abstract class ApiConst {
   public static readonly ENDPOINT_SCHEDULES = `${environment.apiUrl}/schedule`;
   public static readonly ENDPOINT_USERS = `${environment.apiUrl}/user`;
   public static readonly ENDPOINT_LOGS = `${environment.apiUrl}/log`;
+
+  public static readonly USER_LEVELS: SelectItem<UserLevelEnum | ''>[] = [
+    { value: '', label: 'Selecione', disabled: true },
+    { value: UserLevelEnum.Operator, label: 'Operador' },
+    { value: UserLevelEnum.Moderator, label: 'Moderador' },
+    { value: UserLevelEnum.Admin, label: 'Administrador' },
+  ];
 }

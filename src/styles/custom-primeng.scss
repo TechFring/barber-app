@@ -36,6 +36,11 @@
 ::ng-deep p-calendar.ng-touched.ng-invalid .p-inputtext,
 ::ng-deep p-dropdown.ng-touched.ng-invalid .p-component,
 ::ng-deep p-multiselect.ng-touched.ng-invalid .p-component,
+::ng-deep p-password.ng-touched.ng-invalid .p-component,
 ::ng-deep .p-inputtext.ng-touched.ng-invalid {
   border-color: $error;
+}
+
+::ng-deep p-password .p-component.w-full input {
+  width: 100%;
 }

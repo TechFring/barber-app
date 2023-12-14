@@ -13,7 +13,7 @@ import { PrimeNGConst } from '@core/constants';
 export class AppComponent implements OnInit {
   constructor(
     private _primeNGConfig: PrimeNGConfig,
-    private _sidebarService: SidebarService
+    private _sidebarService: SidebarService,
   ) {}
 
   get expanded$(): Observable<boolean> {

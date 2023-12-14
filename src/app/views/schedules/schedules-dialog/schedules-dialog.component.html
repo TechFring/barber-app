@@ -10,29 +10,29 @@
   <form class="formgrid grid" [formGroup]="formGroup">
     <div class="col-6">
       <div class="flex flex-column gap-2 pb-4">
-        <label>Título*</label>
+        <label>Título</label>
         <input pInputText formControlName="title" />
       </div>
 
       <div class="flex flex-column gap-2 pb-4">
-        <label>Barbeiro*</label>
+        <label>Barbeiro</label>
         <p-dropdown appendTo="body" optionLabel="name" optionDisabled="active" styleClass="w-full" formControlName="barber" [options]="barbers" [autoDisplayFirst]="false"></p-dropdown>
       </div>
 
       <div class="flex flex-column gap-2 pb-4">
-        <label>Cliente*</label>
+        <label>Cliente</label>
         <p-dropdown appendTo="body" optionLabel="name" optionDisabled="active" styleClass="w-full" formControlName="customer" [options]="customers" [autoDisplayFirst]="false"></p-dropdown>
       </div>
 
       <div class="flex flex-column gap-2">
-        <label>Serviços*</label>
+        <label>Serviços</label>
         <p-multiSelect appendTo="body" optionLabel="name" optionDisabled="active" display="chip" styleClass="w-full" formControlName="labors" [options]="labors"></p-multiSelect>
       </div>
     </div>
 
     <div class="col-6">
       <div class="flex flex-column gap-2 relative pb-4">
-        <label>Início*</label>
+        <label>Início</label>
         <p-calendar appendTo="body" dateFormat="dd/mm/yy" styleClass="w-full" formControlName="start" [showTime]="true"></p-calendar>
         <small class="text-danger" *ngIf="startControl.errors?.['unavailable']">
           Horário indisponível
@@ -40,7 +40,7 @@
       </div>
 
       <div class="flex flex-column gap-2 pb-4">
-        <label>Fim*</label>
+        <label>Fim</label>
         <p-calendar appendTo="body" dateFormat="dd/mm/yy" styleClass="w-full" formControlName="end" [showTime]="true"></p-calendar>
       </div>
 

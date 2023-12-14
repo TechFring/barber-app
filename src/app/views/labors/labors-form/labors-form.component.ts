@@ -28,7 +28,7 @@ export class LaborsFormComponent {
   ){}
 
   get pageTitle(): string {
-    return this.editMode ? 'Editar cliente' : 'Novo cliente';
+    return this.editMode ? 'Editar serviço' : 'Novo serviço';
   }
 
   get nameControl(): FormControl {

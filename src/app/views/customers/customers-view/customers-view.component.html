@@ -58,7 +58,7 @@
       <tr *ngIf="!loading">
         <td><p-tableCheckbox [value]="customer"></p-tableCheckbox></td>
         <td>{{ customer.name }}</td>
-        <td>{{ customer.phone }}</td>
+        <td>{{ customer.phone | mask: '(99) 99999-9999' }}</td>
         <td>{{ customer.email }}</td>
         <td><ng-template [appRegisterStatus]="customer.active"></ng-template></td>
         <td><p-button styleClass="p-button-raised p-button-text p-button-sm" [routerLink]="customer.id">Acessar</p-button></td>

@@ -21,6 +21,10 @@ export class RequestInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
+        if (err.status === 418) {
+          this._userService.logout();
+        }
+
         this._messageService.add({ severity: 'error', detail: err.error.message || 'Ocorreu um erro inesperado' });
         console.error(err);
         return throwError(() => err);

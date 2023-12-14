@@ -23,7 +23,7 @@
 
   <ul class="sidebar-list">
     <li class="sidebar-list-item" *ngFor="let item of items$ | async" [class.active]="currentRoute === item.url">
-      <a class="sidebar-link" [routerLink]="item.url">
+      <a class="sidebar-link" *ngIf="hasPermission(item)" [routerLink]="item.url">
         <i class="sidebar-icon" [class]="item.icon"></i>
         <span *ngIf="expanded">{{ item.label }}</span>
       </a>

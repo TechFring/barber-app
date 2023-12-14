@@ -8,13 +8,13 @@
 
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
       <div class="xl:col-4 flex flex-column gap-2">
-        <label>Login*</label>
+        <label>Login</label>
         <input pInputText formControlName="login" />
       </div>
 
       <div class="xl:col-4 flex flex-column gap-2">
-        <label>Senha*</label>
-        <input pInputText formControlName="password" type="password" />
+        <label>Senha</label>
+        <p-password styleClass="w-full" formControlName="password" [toggleMask]="true" [feedback]="false"></p-password>
       </div>
 
       <div class="xl:col-4 flex justify-content-end mt-3">

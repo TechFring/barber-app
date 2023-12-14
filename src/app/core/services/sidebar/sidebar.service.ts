@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { MenuItem, PrimeIcons } from 'primeng/api';
+import { PrimeIcons } from 'primeng/api';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { ISidebarItem, UserLevelEnum } from '@core/models';
+import { SystemConst } from '@core/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SidebarService {
-  private readonly ITEMS: MenuItem[] = [
-    { label: 'Agendamentos', icon: PrimeIcons.CALENDAR, url: '/schedules' },
-    { label: 'Barbeiros', icon: PrimeIcons.ID_CARD, url: '/barbers' },
-    { label: 'Clientes', icon: PrimeIcons.USER, url: '/customers' },
-    { label: 'Serviços', icon: PrimeIcons.BOX, url: '/labors' },
-    { label: 'Usuários', icon: PrimeIcons.USERS, url: '/users' },
-    { label: 'Logs', icon: PrimeIcons.DATABASE, url: '/logs' },
+  private readonly ITEMS: ISidebarItem[] = [
+    { label: SystemConst.ROUTES.schedules.title, icon: PrimeIcons.CALENDAR, url: SystemConst.ROUTES.schedules.url },
+    { label: SystemConst.ROUTES.barbers.title, icon: PrimeIcons.ID_CARD, url: SystemConst.ROUTES.barbers.url },
+    { label: SystemConst.ROUTES.customers.title, icon: PrimeIcons.USER, url: SystemConst.ROUTES.customers.url },
+    { label: SystemConst.ROUTES.labors.title, icon: PrimeIcons.BOX, url: SystemConst.ROUTES.labors.url },
+    { label: SystemConst.ROUTES.users.title, icon: PrimeIcons.USERS, url: SystemConst.ROUTES.users.url, level: SystemConst.ROUTES.users.level },
+    { label: SystemConst.ROUTES.logs.title, icon: PrimeIcons.DATABASE, url: SystemConst.ROUTES.logs.url, level: SystemConst.ROUTES.logs.level },
   ];
   private _expanded$ = new BehaviorSubject<boolean>(true);
 
@@ -26,7 +29,7 @@ export class SidebarService {
     return this._expanded$.asObservable();
   }
 
-  public searchItems(term: string): MenuItem[] {
+  public searchItems(term: string): ISidebarItem[] {
     term = this._adjustSearchItem(term);
     return this.ITEMS.filter(({ label }) => (this._adjustSearchItem(label as string)).includes(term));
   }

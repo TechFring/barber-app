@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SystemConst } from '@core/constants';
 import { AuthenticatedComponent, UnauthenticatedComponent } from '@core/templates';
-import { authGuard } from '@core/guards';
+import { authGuard, userLevelGuard } from '@core/guards';
 
 const routes: Routes = [
   { path: '', redirectTo: SystemConst.DEFAULT_ROUTE, pathMatch: 'full' },
@@ -14,38 +14,38 @@ const routes: Routes = [
       {
         path: SystemConst.ROUTES.schedules.base,
         loadChildren: () => import('./views/schedules/schedules.module'),
-        data: { title: 'Agendamentos' },
+        data: { title: SystemConst.ROUTES.schedules.title },
         canActivate: [authGuard()],
       },
       {
         path: SystemConst.ROUTES.barbers.base,
         loadChildren: () => import('./views/barbers/barbers.module'),
-        data: { title: 'Barbeiros' },
+        data: { title: SystemConst.ROUTES.barbers.title },
         canActivate: [authGuard()],
       },
       {
-        path: 'customers',
+        path: SystemConst.ROUTES.customers.base,
         loadChildren: () => import('./views/customers/customers.module'),
-        data: { title: 'Clientes' },
+        data: { title: SystemConst.ROUTES.customers.title },
         canActivate: [authGuard()],
       },
       {
-        path: 'labors',
+        path: SystemConst.ROUTES.labors.base,
         loadChildren: () => import('./views/labors/labors.module'),
-        data: { title: 'Serviços' },
+        data: { title: SystemConst.ROUTES.labors.title },
         canActivate: [authGuard()],
       },
       {
-        path: 'users',
+        path: SystemConst.ROUTES.users.base,
         loadChildren: () => import('./views/users/users.module'),
-        data: { title: 'Usuários' },
-        canActivate: [authGuard()],
+        data: { title: SystemConst.ROUTES.users.title },
+        canActivate: [authGuard(), userLevelGuard(SystemConst.ROUTES.users.level)],
       },
       {
-        path: 'logs',
+        path: SystemConst.ROUTES.logs.base,
         loadChildren: () => import('./views/logs/logs.module'),
-        data: { title: 'Logs' },
-        canActivate: [authGuard()],
+        data: { title: SystemConst.ROUTES.logs.title },
+        canActivate: [authGuard(), userLevelGuard(SystemConst.ROUTES.logs.level)],
       },
     ]
   },
@@ -54,7 +54,7 @@ const routes: Routes = [
     component: UnauthenticatedComponent,
     children: [
       {
-        path: 'auth',
+        path: SystemConst.ROUTES.auth.base,
         loadChildren: () => import('./views/auth/auth.module'),
         canActivate: [authGuard(false)],
       },
@@ -62,7 +62,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'auth'
+    redirectTo: SystemConst.DEFAULT_ROUTE
   }
 ];
 

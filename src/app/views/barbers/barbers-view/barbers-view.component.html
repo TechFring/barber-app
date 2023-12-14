@@ -56,7 +56,7 @@
         <td><p-tableCheckbox [value]="barber"></p-tableCheckbox></td>
         <td>{{ barber.name }}</td>
         <td>{{ barber.email }}</td>
-        <td>{{ barber.document }}</td>
+        <td>{{ barber.document | mask: '999.999.999-99' }}</td>
         <td><ng-template [appRegisterStatus]="barber.active"></ng-template></td>
         <td><p-button styleClass="p-button-raised p-button-text p-button-sm" [routerLink]="barber.id">Acessar</p-button></td>
       </tr>
