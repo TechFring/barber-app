@@ -112,6 +112,10 @@ export class UsersFormComponent {
     const userLevel = (this.levelControl.value as SelectItem<UserLevelEnum>).value;
     const authUser = this._usersService.authenticatedUser!;
 
+    if (!this.editMode) {
+      return true;
+    }
+
     if (validateId) {
       return this.id !== authUser.sub && authUser.level >= userLevel;
     }
