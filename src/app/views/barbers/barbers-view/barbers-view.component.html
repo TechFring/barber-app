@@ -8,13 +8,13 @@
     </div>
 
     <div class="col flex flex-column gap-2 pb-4">
-      <label>Documento</label>
-      <p-inputMask formControlName="document" styleClass="w-full" mask="999.999.999-99" [autoClear]="false" [unmask]="true" />
+      <label>Email</label>
+      <input pInputText formControlName="email" />
     </div>
 
     <div class="col flex flex-column gap-2 pb-4">
-      <label>Email</label>
-      <input pInputText formControlName="email" />
+      <label>Documento</label>
+      <p-inputMask formControlName="document" styleClass="w-full" mask="999.999.999-99" [autoClear]="false" [unmask]="true" />
     </div>
   </form>
 </app-filter>
