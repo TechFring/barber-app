@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 import { CustomersService } from '@core/services';
 import { ICustomer } from '@core/models';
@@ -25,6 +26,7 @@ export class CustomersFormComponent {
     private _fb: NonNullableFormBuilder,
     private _router: Router,
     private _customersService: CustomersService,
+    private _messageService: MessageService
   ) {}
 
   get pageTitle(): string {
@@ -61,7 +63,14 @@ export class CustomersFormComponent {
       ? this._customersService.update(customer)
       : this._customersService.create(customer);
 
-    request$.subscribe(() => this._router.navigateByUrl('/customers'));
+    const detail = this.editMode
+      ? 'Cliente atualizado com sucesso'
+      : 'Cliente cadastrado com sucesso';
+
+    request$.subscribe(() => {
+      this._messageService.add({ severity: 'success', detail });
+      this._router.navigateByUrl('/customers');
+    });
   }
 
   public onActive(): void {
