@@ -30,4 +30,6 @@ Siga os passos abaixo para executar o projeto em ambiente de produção:
 3. Após isso o projeto ficará disponível em http://localhost:8080.
 
 ## Testes End-to-End
+Utilize o comando abaixo para executar os testes end-to-end:
+
 **Em Construção**
