@@ -25,8 +25,8 @@ Siga os passos abaixo para executar o projeto em ambiente de desenvolvimento:
 ### Ambiente de Produção
 Siga os passos abaixo para executar o projeto em ambiente de produção:
 
-1. Execute o comando `docker-compose build` para construir a imagem do projeto.
-2. Execute o comando `docker-compose up` para criar/iniciar o container do projeto.
+1. Execute o comando `docker-compose build` para construir a imagem.
+2. Execute o comando `docker-compose up` para criar/iniciar o container.
 3. Após isso o projeto ficará disponível em http://localhost:8080.
 
 ## Testes End-to-End
