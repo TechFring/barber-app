@@ -1,0 +1,38 @@
+<h1 class="text-xl mb-5">{{ pageTitle }}</h1>
+
+<form class="formgrid grid pb-4" [formGroup]="formGroup">
+  <div class="grid col-12 xl:col-9">
+    <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
+      <label>Nome</label>
+      <input pInputText formControlName="name" />
+      <small class="text-danger ml-2" *ngIf="nameControl.errors?.['maxlength'] as error">
+        Máximo {{ error.requiredLength }} caracteres
+      </small>
+    </div>
+
+    <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4">
+      <label>Data de nascimento</label>
+      <p-calendar dateFormat="dd/mm/yy" styleClass="w-full" formControlName="date_birth" [readonlyInput]="true"></p-calendar>
+    </div>
+
+    <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4">
+      <label>Documento</label>
+      <p-inputMask formControlName="document" styleClass="w-full" mask="999.999.999-99" [unmask]="true" />
+    </div>
+
+    <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
+      <label>Email</label>
+      <input pInputText formControlName="email" />
+      <small class="text-danger ml-2" *ngIf="emailControl.touched && emailControl.errors?.['email']">
+        Email inválido
+      </small>
+    </div>
+  </div>
+</form>
+
+<footer class="footer">
+  <p-confirmPopup></p-confirmPopup>
+  <p-button styleClass="p-button-sm" (onClick)="onSave()">Salvar</p-button>
+  <p-button styleClass="p-button-raised p-button-text p-button-sm" routerLink="/barbers">Voltar</p-button>
+  <ng-template *ngIf="editMode" [appToggleStatusButton]="isActive" (onActive)="onActive()" (onInactive)="onInactive()"></ng-template>
+</footer>

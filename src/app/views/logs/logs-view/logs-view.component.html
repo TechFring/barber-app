@@ -1,0 +1,68 @@
+<h1 class="text-xl mb-5">Lista de logs</h1>
+
+<app-filter (onFilter)="list()" (onClear)="list(true)">
+  <form [formGroup]="filterForm" class="formgrid grid">
+    <div class="col flex flex-column gap-2 pb-4">
+      <label>Descrição</label>
+      <input pInputText formControlName="description" />
+    </div>
+
+    <div class="col flex flex-column gap-2 pb-4">
+      <label>Data de criação</label>
+      <p-calendar dateFormat="dd/mm/yy" styleClass="w-full" formControlName="created_at"></p-calendar>
+    </div>
+  </form>
+</app-filter>
+
+<div class="mt-5 pb-8">
+  <p-table
+    dataKey="id"
+    [value]="data"
+    [totalRecords]="totalRecords"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="limitPaging"
+    [rowsPerPageOptions]="[5, 10, 25]"
+    [(selection)]="checked"
+    (onPage)="onLazyLoad($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th>Descrição</th>
+        <th>Data de criação</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-log let-expanded="expanded">
+      <tr *ngIf="loading">
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+      </tr>
+
+      <tr *ngIf="!loading">
+        <td class="w-4rem">
+          <p-button
+            type="button"
+            styleClass="p-button-rounded p-button-text p-button-plain w-2rem h-2rem"
+            [pRowToggler]="log"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          ></p-button>
+        </td>
+        <td class="ellipsis">{{ log.description }}</td>
+        <td>{{ log.created_at | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-log>
+      <tr class="bg-dark-0">
+        <td></td>
+        <td colspan="100%">
+          <h3 class="text-base font-semibold">Descrição completa</h3>
+          <p class="mt-2 line-height-2">{{ log.description }}</p>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

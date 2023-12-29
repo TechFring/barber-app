@@ -1,0 +1,25 @@
+<div class="background">
+  <div class="container">
+    <div class="xl:col-4 flex justify-content-center">
+      <img class="logo mb-5" src="assets/images/logo.png" alt="Logo" />
+    </div>
+
+    <h1 class="text-4xl mb-3">Entrar</h1>
+
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+      <div class="xl:col-4 flex flex-column gap-2">
+        <label>Login</label>
+        <input pInputText formControlName="login" />
+      </div>
+
+      <div class="xl:col-4 flex flex-column gap-2">
+        <label>Senha</label>
+        <p-password styleClass="w-full" formControlName="password" [toggleMask]="true" [feedback]="false"></p-password>
+      </div>
+
+      <div class="xl:col-4 flex justify-content-end mt-3">
+        <p-button class="w-full" styleClass="w-full justify-content-center" type="submit">Entrar</p-button>
+      </div>
+    </form>
+  </div>
+</div>

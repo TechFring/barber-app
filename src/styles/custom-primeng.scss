@@ -1,0 +1,46 @@
+::ng-deep p-table {
+  .p-paginator,
+  .p-datatable .p-datatable-tbody > tr,
+  .p-datatable .p-datatable-thead > tr > th {
+    background: $dark-1;
+  }
+}
+
+::ng-deep p-panel .p-panel {
+  &-header,
+  &-content {
+    background: $dark-1 !important;
+  }
+
+  &-content {
+    padding: 32px 16px;
+  }
+}
+
+::ng-deep p-fileupload .p-fileupload {
+  .p-fileupload-buttonbar,
+  .p-fileupload-content {
+    background: $dark-1;
+  }
+
+  .p-fileupload-files img {
+    border-radius: 100%;
+    border: 1px solid $dark-4;
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+  }
+}
+
+::ng-deep p-inputmask.ng-touched.ng-invalid .p-inputtext,
+::ng-deep p-calendar.ng-touched.ng-invalid .p-inputtext,
+::ng-deep p-dropdown.ng-touched.ng-invalid .p-component,
+::ng-deep p-multiselect.ng-touched.ng-invalid .p-component,
+::ng-deep p-password.ng-touched.ng-invalid .p-component,
+::ng-deep .p-inputtext.ng-touched.ng-invalid {
+  border-color: $error;
+}
+
+::ng-deep p-password .p-component.w-full input {
+  width: 100%;
+}

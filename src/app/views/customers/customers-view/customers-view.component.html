@@ -1,0 +1,76 @@
+<h1 class="text-xl mb-5">Lista de clientes</h1>
+
+<app-filter (onFilter)="list()" (onClear)="list(true)">
+  <form [formGroup]="filterForm" class="formgrid grid">
+    <div class="col flex flex-column gap-2 pb-4">
+      <label>Nome</label>
+      <input pInputText formControlName="name" />
+    </div>
+
+    <div class="col flex flex-column gap-2 pb-4">
+      <label>Telefone</label>
+      <p-inputMask formControlName="phone" styleClass="w-full" mask="(99) 99999-9999" [autoClear]="false" [unmask]="true" />
+    </div>
+
+    <div class="col flex flex-column gap-2 pb-4 relative">
+      <label>Email</label>
+      <input pInputText formControlName="email" />
+      <small class="text-danger absolute bottom-0" *ngIf="emailControl.errors?.['email']">
+        Email inválido
+      </small>
+    </div>
+  </form>
+</app-filter>
+
+<div class="mt-5 pb-8">
+  <p-table
+    dataKey="id"
+    [value]="data"
+    [totalRecords]="totalRecords"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="limitPaging"
+    [rowsPerPageOptions]="[5, 10, 25]"
+    [(selection)]="checked"
+    (onPage)="onLazyLoad($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="w-4rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th class="w-8rem"></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-customer>
+      <tr *ngIf="loading">
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+        <td><p-skeleton></p-skeleton></td>
+      </tr>
+
+      <tr *ngIf="!loading">
+        <td><p-tableCheckbox [value]="customer"></p-tableCheckbox></td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.phone | mask: '(99) 99999-9999' }}</td>
+        <td>{{ customer.email }}</td>
+        <td><ng-template [appRegisterStatus]="customer.active"></ng-template></td>
+        <td><p-button styleClass="p-button-raised p-button-text p-button-sm" [routerLink]="customer.id">Acessar</p-button></td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="paginatorleft">
+      <ng-template appActionsButton (onActive)="onActive()" (onInactive)="onInactive()"></ng-template>
+    </ng-template>
+  </p-table>
+</div>
+
+<footer class="footer">
+  <p-button styleClass="p-button-sm" routerLink="new">Novo cliente</p-button>
+</footer>

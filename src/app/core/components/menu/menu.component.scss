@@ -1,0 +1,23 @@
+@import '/src/styles/variables.scss';
+
+.menu {
+  height: $menu-height;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  position: fixed;
+  inset: 0 0 auto $sidebar-collapsed-width;
+  background-color: $dark-0;
+  transition: left ease-in 0.1s;
+  z-index: 1000;
+
+  &--collapsed {
+    left: $sidebar-expanded-width;
+  }
+}
+
+.sidebar-control {
+  font-size: 22px;
+  cursor: pointer;
+}
+

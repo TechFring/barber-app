@@ -1,0 +1,7 @@
+<header class="menu" [class.menu--collapsed]="expanded$ | async">
+  <i class="pi pi-bars sidebar-control" (click)="toggleSidebar()"></i>
+
+  <div class="flex flex-column ml-3">
+    <span class="text-lg font-semibold">{{ menuTitle$ | async }}</span>
+  </div>
+</header>

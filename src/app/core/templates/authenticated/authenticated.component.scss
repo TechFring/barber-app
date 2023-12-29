@@ -1,0 +1,15 @@
+@import '/src/styles/variables.scss';
+
+.content {
+  padding-top: $menu-height;
+  margin-left: $sidebar-collapsed-width;
+  transition: margin-left ease-in 0.1s;
+
+  &--collapsed {
+    margin-left: $sidebar-expanded-width;
+
+    ::ng-deep .footer {
+      left: $sidebar-expanded-width;
+    }
+  }
+}
