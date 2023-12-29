@@ -149,6 +149,7 @@ export class UsersFormComponent {
 
     if (this.hasPermission()) {
       this.loginControl.disable();
+      this.levelControl.disable();
     } else {
       this.formGroup.disable();
     }
