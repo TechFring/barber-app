@@ -1,27 +1,35 @@
-# BarberApp
+# barber-app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+## Importante
+Para que o projeto barber-app funcione corretamente, é necessário que o projeto barber-api esteja em execução. Caso ainda não esteja em execução, siga os passos indicados no link a seguir antes de prosseguir: [barber-api](https://github.com/TechFring/barber-api/tree/dev).
 
-## Development server
+## Screenshot
+![image](https://github.com/TechFring/barber-app/assets/54766216/388da814-3b7c-4b58-b2c1-bd883471b0c3)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Pré-requisitos
+Certifique-se de que as seguintes ferramentas estejam instaladas e configuradas em seu ambiente antes de executar o projeto:
 
-## Code scaffolding
+- Node.js 18.17
+- Docker
+- Docker Compose
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Execução do Projeto
 
-## Build
+### Ambiente de Desenvolvimento
+Siga os passos abaixo para executar o projeto em ambiente de desenvolvimento:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Execute o comando `npm install` para instalar as dependências do projeto.
+2. Execute o comando `npm start` para iniciar o projeto.
+3. Após isso o projeto ficará disponível em http://localhost:4200.
 
-## Running unit tests
+### Ambiente de Produção
+Siga os passos abaixo para executar o projeto em ambiente de produção:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Execute o comando `docker-compose build` para construir a imagem.
+2. Execute o comando `docker-compose up` para criar/iniciar o container.
+3. Após isso o projeto ficará disponível em http://localhost:8080.
 
-## Running end-to-end tests
+## Testes End-to-End
+Utilize o comando abaixo para executar os testes end-to-end:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+**Em Construção**
