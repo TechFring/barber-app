@@ -7,7 +7,6 @@ import { BarbersService } from '@core/services';
 import { ApiConst } from '@core/constants';
 
 @Component({
-  selector: 'app-barbers-view',
   templateUrl: './barbers-view.component.html',
 })
 export class BarbersViewComponent implements OnInit {

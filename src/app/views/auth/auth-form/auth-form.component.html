@@ -7,14 +7,14 @@
     <h1 class="text-4xl mb-3">Entrar</h1>
 
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-      <div class="xl:col-4 flex flex-column gap-2">
+      <div class="xl:col-4 flex flex-column gap-2 pb-3">
         <label>Login</label>
-        <input pInputText formControlName="login" />
+        <input pInputText formControlName="login" data-test="login" />
       </div>
 
       <div class="xl:col-4 flex flex-column gap-2">
         <label>Senha</label>
-        <p-password styleClass="w-full" formControlName="password" [toggleMask]="true" [feedback]="false"></p-password>
+        <p-password styleClass="w-full" formControlName="password" [toggleMask]="true" [feedback]="false" data-test="password"></p-password>
       </div>
 
       <div class="xl:col-4 flex justify-content-end mt-3">

@@ -4,17 +4,17 @@
   <form [formGroup]="filterForm" class="formgrid grid">
     <div class="col flex flex-column gap-2 pb-4">
       <label>Nome</label>
-      <input pInputText formControlName="name" />
+      <input pInputText formControlName="name" data-test="name" />
     </div>
 
     <div class="col flex flex-column gap-2 pb-4">
       <label>Email</label>
-      <input pInputText formControlName="email" />
+      <input pInputText formControlName="email" data-test="email" />
     </div>
 
     <div class="col flex flex-column gap-2 pb-4">
       <label>Documento</label>
-      <p-inputMask formControlName="document" styleClass="w-full" mask="999.999.999-99" [autoClear]="false" [unmask]="true" />
+      <p-inputMask formControlName="document" styleClass="w-full" mask="999.999.999-99" [autoClear]="false" [unmask]="true" data-test="document" />
     </div>
   </form>
 </app-filter>

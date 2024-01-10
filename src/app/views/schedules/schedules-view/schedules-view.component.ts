@@ -8,7 +8,6 @@ import { SchedulesService } from '@core/services';
 import { SchedulesDialogComponent } from '../schedules-dialog/schedules-dialog.component';
 
 @Component({
-  selector: 'app-schedules-view',
   templateUrl: './schedules-view.component.html',
   styleUrls: ['./schedules-view.component.scss']
 })

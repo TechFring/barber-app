@@ -16,24 +16,24 @@
 
       <div class="flex flex-column gap-2 pb-4">
         <label>Barbeiro</label>
-        <p-dropdown appendTo="body" optionLabel="name" optionDisabled="active" styleClass="w-full" formControlName="barber" [options]="barbers" [autoDisplayFirst]="false"></p-dropdown>
+        <p-dropdown appendTo="body" optionLabel="name" optionDisabled="active" styleClass="w-full" formControlName="barber" [options]="barbers" [autoDisplayFirst]="false" data-test="barber"></p-dropdown>
       </div>
 
       <div class="flex flex-column gap-2 pb-4">
         <label>Cliente</label>
-        <p-dropdown appendTo="body" optionLabel="name" optionDisabled="active" styleClass="w-full" formControlName="customer" [options]="customers" [autoDisplayFirst]="false"></p-dropdown>
+        <p-dropdown appendTo="body" optionLabel="name" optionDisabled="active" styleClass="w-full" formControlName="customer" [options]="customers" [autoDisplayFirst]="false" data-test="customer"></p-dropdown>
       </div>
 
       <div class="flex flex-column gap-2">
         <label>Serviços</label>
-        <p-multiSelect appendTo="body" optionLabel="name" optionDisabled="active" display="chip" styleClass="w-full" formControlName="labors" [options]="labors"></p-multiSelect>
+        <p-multiSelect appendTo="body" optionLabel="name" optionDisabled="active" display="chip" styleClass="w-full" formControlName="labors" [options]="labors" data-test="labors"></p-multiSelect>
       </div>
     </div>
 
     <div class="col-6">
       <div class="flex flex-column gap-2 relative pb-4">
         <label>Início</label>
-        <p-calendar appendTo="body" dateFormat="dd/mm/yy" styleClass="w-full" formControlName="start" [showTime]="true"></p-calendar>
+        <p-calendar appendTo="body" dateFormat="dd/mm/yy" styleClass="w-full" formControlName="start" [showTime]="true" data-test="start"></p-calendar>
         <small class="text-danger" *ngIf="startControl.errors?.['unavailable']">
           Horário indisponível
         </small>

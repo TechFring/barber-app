@@ -7,7 +7,6 @@ import { LogsService } from '@core/services';
 import { ILog, ILogFilters } from '@core/models/interfaces/logs.interface';
 
 @Component({
-  selector: 'app-logs-view',
   templateUrl: './logs-view.component.html',
 })
 export class LogsViewComponent implements OnInit {

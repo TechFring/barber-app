@@ -4,13 +4,13 @@
   <div class="grid col-12 xl:col-9">
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
       <label>Nome</label>
-      <input pInputText formControlName="name" />
+      <input pInputText formControlName="name" data-test="name" />
       <small class="text-danger ml-2" *ngIf="nameControl.errors?.['maxlength'] as error">Máximo {{ error.requiredLength }} caracteres</small>
     </div>
 
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
       <label>Login</label>
-      <input pInputText formControlName="login" />
+      <input pInputText formControlName="login" data-test="login" />
       <small class="text-danger ml-2" *ngIf="loginControl.errors?.['pattern']">O login não pode conter espaços</small>
       <small class="text-danger ml-2" *ngIf="loginControl.errors?.['maxlength'] as error">Máximo {{ error.requiredLength }} caracteres</small>
       <small class="text-danger ml-2" *ngIf="loginControl.errors?.['minlength'] as error">Mínimo {{ error.requiredLength }} caracteres</small>
@@ -18,20 +18,20 @@
 
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
       <label>Senha</label>
-      <p-password styleClass="w-full" formControlName="password" [toggleMask]="true" [feedback]="false"></p-password>
+      <p-password styleClass="w-full" formControlName="password" [toggleMask]="true" [feedback]="false" data-test="password"></p-password>
       <small class="text-danger ml-2" *ngIf="passwordControl.errors?.['maxlength'] as error">Máximo {{ error.requiredLength }} caracteres</small>
       <small class="text-danger ml-2" *ngIf="passwordControl.errors?.['minlength'] as error">Mínimo {{ error.requiredLength }} caracteres</small>
     </div>
 
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
       <label>Confirmação da senha</label>
-      <p-password styleClass="w-full" formControlName="confirm" [toggleMask]="true" [feedback]="false" (input)="onInput()"></p-password>
+      <p-password styleClass="w-full" formControlName="confirm" [toggleMask]="true" [feedback]="false" (input)="onInput()" data-test="confirm"></p-password>
       <small class="text-danger ml-2" *ngIf="confirmControl.errors?.['matcher'] as error">As senhas digitadas não coincidem</small>
     </div>
 
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4">
       <label>Tipo de usuário</label>
-      <p-dropdown styleClass="w-full" formControlName="level" [options]="userLevels" optionLabel="label"></p-dropdown>
+      <p-dropdown styleClass="w-full" formControlName="level" [options]="userLevels" optionLabel="label" data-test="level"></p-dropdown>
     </div>
   </div>
 </form>
