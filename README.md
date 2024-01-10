@@ -20,7 +20,7 @@ Siga os passos abaixo para executar o projeto em ambiente de desenvolvimento:
 
 1. Execute o comando `npm install` para instalar as dependências do projeto.
 2. Execute o comando `npm start` para iniciar o projeto.
-3. Após isso o projeto ficará disponível em http://localhost:4200.
+3. Após isso o projeto ficará disponível em http://localhost:8080.
 
 ### Ambiente de Produção
 Siga os passos abaixo para executar o projeto em ambiente de produção:
@@ -30,6 +30,13 @@ Siga os passos abaixo para executar o projeto em ambiente de produção:
 3. Após isso o projeto ficará disponível em http://localhost:8080.
 
 ## Testes End-to-End
-Utilize o comando abaixo para executar os testes end-to-end:
+Para executar os testes end-to-end, é necessário configurar as variáveis de ambiente.
+Para isso você deve criar um chamado **.env** no diretório raiz do projeto, o conteúdo desse arquivo deve seguir o exemplo abaixo:
 
-**Em Construção**
+```env
+# Credenciais do usuário utilizadas durante os testes
+CYPRESS_LOGIN=admin
+CYPRESS_PASSWORD=01234567
+```
+
+Com o arquivo **.env** criado e configurado corretamente, basta rodar o comando `npm run cy:run` para que os testes sejam executados.
