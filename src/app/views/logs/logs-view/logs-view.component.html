@@ -4,12 +4,12 @@
   <form [formGroup]="filterForm" class="formgrid grid">
     <div class="col flex flex-column gap-2 pb-4">
       <label>Descrição</label>
-      <input pInputText formControlName="description" />
+      <input pInputText formControlName="description" data-test="description" />
     </div>
 
     <div class="col flex flex-column gap-2 pb-4">
       <label>Data de criação</label>
-      <p-calendar dateFormat="dd/mm/yy" styleClass="w-full" formControlName="created_at"></p-calendar>
+      <p-calendar dateFormat="dd/mm/yy" styleClass="w-full" formControlName="created_at" data-test="created_at"></p-calendar>
     </div>
   </form>
 </app-filter>

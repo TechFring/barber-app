@@ -4,7 +4,7 @@
   <div class="grid col-12 xl:col-9">
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
       <label>Nome</label>
-      <input pInputText formControlName="name" />
+      <input pInputText formControlName="name" data-test="name" />
       <small class="text-danger ml-2" *ngIf="nameControl.errors?.['maxlength'] as error">
         Máximo {{ error.requiredLength }} caracteres
       </small>
@@ -12,7 +12,7 @@
 
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4">
       <label>Duração</label>
-      <input pInputText type="time" formControlName="duration" />
+      <p-inputMask formControlName="duration" styleClass="w-full" mask="99:99" data-test="duration" />
     </div>
   </div>
 </form>

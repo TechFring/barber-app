@@ -7,9 +7,7 @@ import { ICustomer, ICustomerFilters } from '@core/models';
 import { CustomersService } from '@core/services';
 
 @Component({
-  selector: 'app-customers-view',
   templateUrl: './customers-view.component.html',
-  styleUrls: ['./customers-view.component.scss']
 })
 export class CustomersViewComponent implements OnInit {
   public filterForm = this._fb.group({

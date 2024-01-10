@@ -2,7 +2,7 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { EventImpl } from '@fullcalendar/core/internal';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 
 import { SchedulesFacade } from '@core/facades';
@@ -11,7 +11,6 @@ import { IBarber, ICustomer, ILabor, ISchedule, IScheduleData, IScheduleForm, IS
 @Component({
   selector: 'app-schedules-dialog',
   templateUrl: './schedules-dialog.component.html',
-  styleUrls: ['./schedules-dialog.component.scss']
 })
 export class SchedulesDialogComponent implements OnInit {
   public formGroup!: FormGroup<IScheduleForm>;
@@ -28,7 +27,8 @@ export class SchedulesDialogComponent implements OnInit {
   constructor(
     private _fb: NonNullableFormBuilder,
     private _confirmationService: ConfirmationService,
-    private _schedulesFacade: SchedulesFacade
+    private _schedulesFacade: SchedulesFacade,
+    private _messageService: MessageService
   ) {}
 
   get dialogHeader(): string {
@@ -78,23 +78,25 @@ export class SchedulesDialogComponent implements OnInit {
     }
 
     const data = this.formGroup.getRawValue() as IScheduleData;
+
     const request$ = this.editMode
       ? this._schedulesFacade.update(data, this.schedule!.id!)
       : this._schedulesFacade.create(data);
 
-    request$.subscribe({
-      next: () => this.onClose(true),
-      error: (err) => console.error(err)
+    const detail = this.editMode
+      ? 'Agendamento atualizado com sucesso'
+      : 'Agendamento cadastrado com sucesso';
+
+    request$.subscribe(() => {
+      this._messageService.add({ severity: 'success', detail });
+      this.onClose(true);
     });
   }
 
   public onDelete(event: Event): void {
     const accept = () => {
       const scheduleId = this.schedule!.id!;
-      this._schedulesFacade.delete(scheduleId).subscribe({
-        next: () => this.onClose(true),
-        error: (err) => console.error(err)
-      });
+      this._schedulesFacade.delete(scheduleId).subscribe(() => this.onClose(true));
     };
 
     this._confirmationService.confirm({

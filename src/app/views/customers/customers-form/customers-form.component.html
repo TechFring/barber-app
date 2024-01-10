@@ -4,18 +4,18 @@
   <div class="grid col-12 xl:col-9">
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
       <label>Nome</label>
-      <input pInputText formControlName="name" />
+      <input pInputText formControlName="name" data-test="name" />
       <small class="text-danger ml-2" *ngIf="nameControl.touched && nameControl.errors?.['maxlength'] as error">Máximo {{ error.requiredLength }} caracteres</small>
     </div>
 
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
       <label>Telefone</label>
-      <p-inputMask formControlName="phone" styleClass="w-full" mask="(99) 99999-9999" [unmask]="true" />
+      <p-inputMask formControlName="phone" styleClass="w-full" mask="(99) 99999-9999" [unmask]="true" data-test="phone" />
     </div>
 
     <div class="col-12 xl:col-6 flex flex-column gap-2 pb-4 relative">
       <label>Email</label>
-      <input pInputText formControlName="email" />
+      <input pInputText formControlName="email" data-test="email" />
       <small class="text-danger ml-2" *ngIf="emailControl.touched && emailControl.errors?.['email']">Email inválido</small>
     </div>
   </div>

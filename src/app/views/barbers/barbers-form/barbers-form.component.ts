@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 import { IBarber } from '@core/models';
 import { BarbersService } from '@core/services';
 
 @Component({
-  selector: 'app-barbers-form',
   templateUrl: './barbers-form.component.html',
 })
 export class BarbersFormComponent implements OnInit {
@@ -25,6 +25,7 @@ export class BarbersFormComponent implements OnInit {
     private _fb: NonNullableFormBuilder,
     private _router: Router,
     private _barbersService: BarbersService,
+    private _messageService: MessageService
   ) {}
 
   get pageTitle(): string {
@@ -60,8 +61,15 @@ export class BarbersFormComponent implements OnInit {
     const request$ = this.editMode
       ? this._barbersService.update(barber)
       : this._barbersService.create(barber);
+    
+    const detail = this.editMode
+      ? 'Barbeiro atualizado com sucesso'
+      : 'Barbeiro cadastrado com sucesso';
 
-    request$.subscribe(() => this._router.navigateByUrl('/barbers'));
+    request$.subscribe(() => {
+      this._messageService.add({ severity: 'success', detail });
+      this._router.navigateByUrl('/barbers');
+    });
   }
 
   public onActive(): void {

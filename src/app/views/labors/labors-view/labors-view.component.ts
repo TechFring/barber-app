@@ -8,9 +8,7 @@ import { LaborsService } from '@core/services';
 import { timeToMinutes } from '@shared/utils';
 
 @Component({
-  selector: 'app-labors-view',
   templateUrl: './labors-view.component.html',
-  styleUrls: ['./labors-view.component.scss']
 })
 export class LaborsViewComponent implements OnInit {
   public filterForm = this._fb.group({

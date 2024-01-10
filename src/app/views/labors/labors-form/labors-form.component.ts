@@ -1,15 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 import { ILabor } from '@core/models';
 import { LaborsService } from '@core/services';
 import { minutesToTime, timeToMinutes } from '@shared/utils';
 
 @Component({
-  selector: 'app-labors-form',
   templateUrl: './labors-form.component.html',
-  styleUrls: ['./labors-form.component.scss']
 })
 export class LaborsFormComponent {
   @Input() public id?: string;
@@ -25,6 +24,7 @@ export class LaborsFormComponent {
     private _fb: NonNullableFormBuilder,
     private _router: Router,
     private _laborsService: LaborsService,
+    private _messageService: MessageService
   ){}
 
   get pageTitle(): string {
@@ -64,7 +64,14 @@ export class LaborsFormComponent {
       ? this._laborsService.update(labor)
       : this._laborsService.create(labor);
 
-    request$.subscribe(() => this._router.navigateByUrl('/labors'));
+    const detail = this.editMode
+      ? 'Serviço atualizado com sucesso'
+      : 'Serviço cadastrado com sucesso';
+
+    request$.subscribe(() => {
+      this._messageService.add({ severity: 'success', detail });
+      this._router.navigateByUrl('/labors');
+    });
   }
 
   public onActive(): void {

@@ -8,9 +8,7 @@ import { IUser, IUserFilters, UserLevelEnum } from '@core/models';
 import { UsersService } from '@core/services';
 
 @Component({
-  selector: 'app-users-view',
   templateUrl: './users-view.component.html',
-  styleUrls: ['./users-view.component.scss']
 })
 export class UsersViewComponent {
   public filterForm = this._fb.group({

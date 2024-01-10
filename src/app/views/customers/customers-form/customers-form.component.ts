@@ -7,9 +7,7 @@ import { CustomersService } from '@core/services';
 import { ICustomer } from '@core/models';
 
 @Component({
-  selector: 'app-customers-form',
-  templateUrl: './customers-form.component.html',
-  styleUrls: ['./customers-form.component.scss']
+  templateUrl: './customers-form.component.html'
 })
 export class CustomersFormComponent {
   @Input() public id?: string;

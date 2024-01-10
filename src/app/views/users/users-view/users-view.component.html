@@ -4,17 +4,17 @@
   <form [formGroup]="filterForm" class="formgrid grid">
     <div class="col flex flex-column gap-2 pb-4">
       <label>Nome</label>
-      <input pInputText formControlName="name" />
+      <input pInputText formControlName="name" data-test="name" />
     </div>
 
     <div class="col flex flex-column gap-2 pb-4">
       <label>Login</label>
-      <input pInputText formControlName="login" />
+      <input pInputText formControlName="login" data-test="login" />
     </div>
 
     <div class="col flex flex-column gap-2 pb-4">
       <label>Tipo de usuário</label>
-      <p-dropdown styleClass="w-full" formControlName="level" [options]="userLevels" optionLabel="label"></p-dropdown>
+      <p-dropdown styleClass="w-full" formControlName="level" [options]="userLevels" optionLabel="label" data-test="level"></p-dropdown>
     </div>
   </form>
 </app-filter>

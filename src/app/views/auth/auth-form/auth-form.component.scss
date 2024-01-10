@@ -12,6 +12,14 @@
     width: 60%;
     height: 100%;
   }
+
+  @media only screen and (max-width: 1200px) {
+    background: none;
+
+    &:before {
+      content: none;
+    }
+  }  
 }
 
 .container {

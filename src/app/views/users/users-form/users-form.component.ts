@@ -1,16 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { Validators, NonNullableFormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService, SelectItem } from 'primeng/api';
 
 import { ApiConst, SystemConst } from '@core/constants';
 import { IUser, UserLevelEnum } from '@core/models';
 import { UsersService } from '@core/services';
-import { SelectItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-users-form',
   templateUrl: './users-form.component.html',
-  styleUrls: ['./users-form.component.scss']
 })
 export class UsersFormComponent {
   @Input() public id?: string;
@@ -30,6 +28,7 @@ export class UsersFormComponent {
     private _fb: NonNullableFormBuilder,
     private _router: Router,
     private _usersService: UsersService,
+    private _messageService: MessageService
   ){}
 
   get pageTitle(): string {
@@ -97,7 +96,14 @@ export class UsersFormComponent {
       ? this._usersService.update(user)
       : this._usersService.create(user);
 
-    request$.subscribe(() => this._router.navigateByUrl(SystemConst.ROUTES.users.url));
+    const detail = this.editMode
+      ? 'Usuário atualizado com sucesso'
+      : 'Usuário cadastrado com sucesso';
+
+    request$.subscribe(() => {
+      this._messageService.add({ severity: 'success', detail });
+      this._router.navigateByUrl(SystemConst.ROUTES.users.url);
+    });
   }
 
   public onActive(): void {
@@ -147,9 +153,12 @@ export class UsersFormComponent {
     this.passwordControl.removeValidators([Validators.required]);
     this.passwordControl.updateValueAndValidity();
 
+    if (!this.hasPermission(true)) {
+      this.levelControl.disable();
+    }
+
     if (this.hasPermission()) {
       this.loginControl.disable();
-      this.levelControl.disable();
     } else {
       this.formGroup.disable();
     }
