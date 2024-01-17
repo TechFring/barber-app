@@ -1,7 +1,8 @@
 # barber-app
 
 ## Importante
-Para que o projeto barber-app funcione corretamente, é necessário que o projeto barber-api esteja em execução. Caso ainda não esteja em execução, siga os passos indicados no link a seguir antes de prosseguir: [barber-api](https://github.com/TechFring/barber-api/tree/dev).
+Para que o projeto `barber-app` funcione corretamente, é necessário que o projeto `barber-api` esteja em execução.
+Caso ainda não esteja, siga os passos indicados no link a seguir antes de prosseguir: [barber-api](https://github.com/TechFring/barber-api/tree/dev).
 
 ## Screenshot
 ![image](https://github.com/TechFring/barber-app/assets/54766216/388da814-3b7c-4b58-b2c1-bd883471b0c3)
